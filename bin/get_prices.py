@@ -13,7 +13,8 @@ print("Script started...")
 # Logger elements
 log_formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
 root_logger = logging.getLogger()
-log_files_dir = "../logs"
+log_files_dir = Path(__file__).parent.joinpath("../logs")
+print(log_files_dir)
 log_file_name = Path(__file__).stem + "_" + datetime.now().strftime("%Y%m%d_%H%M%S")
 
 logging.debug("") # warm up to initialize logger handlers
