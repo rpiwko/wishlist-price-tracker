@@ -6,6 +6,9 @@ Main script to download latest prices
 import logging
 from pathlib import Path
 from datetime import datetime
+import sys
+sys.path.append(str(Path(__file__).resolve().parent.joinpath("..")))
+import src.common.download_component as download_component
 
 
 print("Script started...")
@@ -29,6 +32,8 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
+url = "https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"
 
 
-
+html = download_component.get_the_html(url)
+print(html)
