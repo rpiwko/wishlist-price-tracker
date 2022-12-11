@@ -9,6 +9,7 @@ from datetime import datetime
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.joinpath("..")))
 import src.price_getters.virtualo as virtualo_price_getter
+import src.price_getters.nexto as nexto_price_getter
 
 
 print("Script started...")
@@ -31,9 +32,11 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
-urls = ["https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/",
-        "https://www.nexto.pl/ebooki/oliver_twist_p1136542.xml"]
 
-for url in urls:
-    price = virtualo_price_getter.get_the_price(url)
-    print("Found price is " + str(price))
+url = "https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"
+price = virtualo_price_getter.get_the_price(url)
+print("Found price is " + str(price))
+
+url = "https://www.nexto.pl/ebooki/oliver_twist_p1136542.xml"
+price = nexto_price_getter.get_the_price(url)
+print("Found price is " + str(price))

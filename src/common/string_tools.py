@@ -33,7 +33,7 @@ def format_and_validate_the_price(price):
     Returns:
         Float number converted and formatted from price
     """
-    price = str(price).replace(",", ".").strip()
+    price = str(price).replace(",", ".").replace("zł", "").strip()
     validate_the_price(price)
     return price
 
