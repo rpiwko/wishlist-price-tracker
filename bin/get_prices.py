@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.joinpath("..")))
-import src.common.download_component as download_component
+import src.price_getters.virtualo as virtualo_price_getter
 
 
 print("Script started...")
@@ -17,7 +17,6 @@ print("Script started...")
 log_formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
 root_logger = logging.getLogger()
 log_files_dir = Path(__file__).parent.joinpath("../logs")
-print(log_files_dir)
 log_file_name = Path(__file__).stem + "_" + datetime.now().strftime("%Y%m%d_%H%M%S")
 
 logging.debug("") # warm up to initialize logger handlers
@@ -32,8 +31,9 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
-url = "https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"
+urls = ["https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/",
+        "https://www.nexto.pl/ebooki/oliver_twist_p1136542.xml"]
 
-
-html = download_component.get_the_html(url)
-print(html)
+for url in urls:
+    price = virtualo_price_getter.get_the_price(url)
+    print("Found price is " + str(price))
