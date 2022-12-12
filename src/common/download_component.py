@@ -1,5 +1,5 @@
 """
-Module to gather download functionalities. 
+Module to gather download functionalities for static pages. 
 Handles requests and responses.
 """
 
