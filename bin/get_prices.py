@@ -7,9 +7,8 @@ import logging
 from pathlib import Path
 from datetime import datetime
 import sys
-sys.path.append(str(Path(__file__).resolve().parent.joinpath("..")))
-import src.price_getters.virtualo as virtualo_price_getter
-import src.price_getters.nexto as nexto_price_getter
+sys.path.append(str(Path(__file__).resolve().parent.joinpath("../src")))
+import shop_watcher as shop_watcher
 
 
 print("Script started...")
@@ -32,11 +31,14 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
-
 url = "https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"
-price = virtualo_price_getter.get_the_price(url)
+price = shop_watcher.get_the_price(url)
 print("Found price is " + str(price))
 
 url = "https://www.nexto.pl/ebooki/oliver_twist_p1136542.xml"
-price = nexto_price_getter.get_the_price(url)
+price = shop_watcher.get_the_price(url)
+print("Found price is " + str(price))
+
+url = "https://www.publio.pl/co-chcesz-powiedziec-swiatu-martyna-wojciechowska,p1490692.html"
+price = shop_watcher.get_the_price(url)
 print("Found price is " + str(price))

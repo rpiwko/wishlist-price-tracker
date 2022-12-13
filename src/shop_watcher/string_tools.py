@@ -23,7 +23,7 @@ def get_domain_from_url(url):
         return domain[0]
 
 
-def format_and_validate_the_price(price):
+def format_and_validate_the_price(raw_price_string):
     """
     Converts string to float number if possible
 
@@ -33,7 +33,9 @@ def format_and_validate_the_price(price):
     Returns:
         Float number converted and formatted from price
     """
-    price = str(price).replace(",", ".").replace("zł", "").strip()
+    logging.info("Raw price string before formatting: " + raw_price_string)
+    price = str(raw_price_string).replace(",", ".").replace("zł", "").strip()
+    logging.info("Price string after formatting: " + price)
     validate_the_price(price)
     return price
 

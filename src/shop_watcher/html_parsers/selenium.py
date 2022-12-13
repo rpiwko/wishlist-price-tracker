@@ -1,5 +1,5 @@
 """
-Module to gather download functionalities for dynamic web pages. 
+Module to gather download functionalities for dynamic pages. 
 Handles requests and responses.
 """
 
@@ -27,6 +27,6 @@ def get_the_html(url):
                             options=firefox_options)
     driver.get(url)
     raw_html_string = driver.page_source
-    logging.info(raw_html_string)
+    # logging.info(raw_html_string)
     driver.quit()
     return  BeautifulSoup(raw_html_string, "html.parser")
