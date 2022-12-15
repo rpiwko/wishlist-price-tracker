@@ -1,6 +1,5 @@
 """
-Module to gather download functionalities for static pages. 
-Handles requests and responses.
+HTML downloader for static pages
 """
 
 

@@ -1,6 +1,5 @@
 """
-Module to gather download functionalities for dynamic pages. 
-Handles requests and responses.
+HTML downloader for dynamic pages
 """
 
 

@@ -5,7 +5,7 @@ Module to find price on nexto.pl
 
 import logging
 from bs4 import BeautifulSoup
-from ..html_parsers import bs4 as download_component
+from ..html_downloader import bs4 as html_downloader
 
 
 def get_supported_domain():
@@ -23,7 +23,7 @@ def get_the_price(url):
         url (str): 
     """
     logging.info("Getting price for URL: " + url)
-    price = _find_price(download_component.get_the_html(url, return_bs4_object=True))
+    price = _find_price(html_downloader.get_the_html(url, return_bs4_object=True))
     return price
 
 

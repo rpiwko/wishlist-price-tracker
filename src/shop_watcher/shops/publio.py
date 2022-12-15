@@ -5,7 +5,7 @@ Module to find price on publio.pl
 
 import logging
 from bs4 import BeautifulSoup
-from ..html_parsers import selenium as download_component
+from ..html_downloader import selenium as html_downloader
 
 
 def get_supported_domain():
@@ -23,7 +23,7 @@ def get_the_price(url):
         url (str): 
     """
     logging.info("Getting price for URL: " + url)
-    price = _find_price(download_component.get_the_html(url))
+    price = _find_price(html_downloader.get_the_html(url))
     return price
 
 
