@@ -23,7 +23,7 @@ def get_the_price(url):
         url (str): 
     """
     logging.info("Getting price for URL: " + url)
-    price = _find_price(html_downloader.get_the_html(url))
+    price = _find_price(html_downloader.get_the_html(url, element_to_wait="//div[@class='prices']"))
     return price
 
 
