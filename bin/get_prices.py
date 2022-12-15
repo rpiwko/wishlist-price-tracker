@@ -9,6 +9,7 @@ from datetime import datetime
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.joinpath("../src")))
 import shop_watcher as shop_watcher
+import json_manager as json_manager
 
 
 print("Script started...")
@@ -31,6 +32,8 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
+
+"""
 url = "https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"
 price = shop_watcher.get_the_price(url)
 print("Found price is " + str(price))
@@ -42,3 +45,8 @@ print("Found price is " + str(price))
 url = "https://www.publio.pl/co-chcesz-powiedziec-swiatu-martyna-wojciechowska,p1490692.html"
 price = shop_watcher.get_the_price(url)
 print("Found price is " + str(price))
+"""
+
+path = Path("./etc/ebooks/ebook_example.json").resolve()
+data = json_manager.read_json_from_file(path)
+json_manager.save_json_to_file(data, path)

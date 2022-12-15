@@ -1,0 +1,44 @@
+{
+    "title": "Oliver Twist",
+    "category": "ebook",
+    "author": "Charles Dickens",
+    "language": "english",
+    "publisher": "",
+    "translator": "",
+    "comment": "",
+    "offers": [
+        {
+            "url": "https://ebookpoint.pl/ksiazki/oliwer-twist-karol-dickens,e_0xtm.htm",
+            "available": true,
+            "lowestPrice": "3.50",
+            "lowestPriceDate": "2021-12-13 05:43",
+            "latestPrice": "6.90",
+            "latestPriceDate": "2022-01-03 07:21"
+        },
+        {
+            "url": "https://www.publio.pl/oliver-twist-charles-dickens,p230672.html",
+            "available": true,
+            "lowestPrice": "3.99",
+            "lowestPriceDate": "2022-10-13 11:54",
+            "latestPrice": "10.99",
+            "latestPriceDate": "2022-11-11 13:28"
+        }
+    ],
+    "references": [
+        {
+            "url": "https://www.goodreads.com/book/show/18254.Oliver_Twist",
+            "rating": "10/10",
+            "excerpt": ""
+        },
+        {
+            "url": "https://lubimyczytac.pl/ksiazka/4994569/oliver-twist",
+            "rating": "10/10",
+            "excerpt": ""
+        },
+        {
+            "url": "https://wielkibuk.com/2015/12/25/oliver-twist-charles-dickens-recenzja-czytamdickensa/",
+            "rating": "10/10",
+            "excerpt": ""
+        }
+    ]
+}

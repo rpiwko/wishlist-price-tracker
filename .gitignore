@@ -1,5 +1,7 @@
 .wpt-env/*
 logs/*
+*.log
+*.bak
 __pycache__
 */__pycache__
 */*/__pycache__
