@@ -52,7 +52,8 @@ urls = json_manager.get_offer_urls(path)
 
 for url in urls:
     try:
-        price = shop_watcher.get_the_price(url)
-        print(price)
+        current_price = shop_watcher.get_the_price(url)
+        print(current_price)
+        json_manager.update_price(path, url, current_price)
     except Exception as e:
         print(f"Error occurred while processing {url}: {str(e)}")
