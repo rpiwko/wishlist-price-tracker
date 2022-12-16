@@ -47,13 +47,28 @@ price = shop_watcher.get_the_price(url)
 print("Found price is " + str(price))
 """
 
-path = Path("./etc/ebooks/ebook_example.json").resolve()
-urls = json_manager.get_offer_urls(path)
+
+"""
+file_path = Path("./etc/ebooks/ebook_example.json").resolve()
+urls = json_manager.get_offer_urls(file_path)
 
 for url in urls:
     try:
         current_price = shop_watcher.get_the_price(url)
         print(current_price)
-        json_manager.update_price(path, url, current_price)
+        json_manager.update_price(file_path, url, current_price)
+    except Exception as e:
+        print(f"Error occurred while processing {url}: {str(e)}")
+"""
+
+
+dir_path = Path("./etc/").resolve()
+urls = json_manager.get_offers_urls(dir_path)
+print(urls)
+
+for url in urls:
+    try:
+        current_price = shop_watcher.get_the_price(url)
+        json_manager.update_price(urls[url], url, current_price)
     except Exception as e:
         print(f"Error occurred while processing {url}: {str(e)}")
