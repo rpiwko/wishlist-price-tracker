@@ -23,7 +23,7 @@ def get_the_html(url, return_bs4_object = False, ignore_response_codes=[]):
         If return_bs4_object is False then then HTML string downloaded from URL
         If return_bs4_object is True then BeautifulSoup object created with "html.parser"
     """
-    logging.info("START: download_component.get_the_html()")
+    logging.info("START: html_downloader.bs4.get_the_html()")
     logging.info(f"URL={url}")
     
     try:
@@ -49,7 +49,7 @@ def get_the_html(url, return_bs4_object = False, ignore_response_codes=[]):
         logging.error(f"Unhandled exception occurred!\n{str(e)}")
         raise
     finally:
-        logging.info("END: download_component.get_the_html()")
+        logging.info("END: html_downloader.bs4.get_the_html()")
     
 
 def _is_good_response(resp, ignore_response_codes):

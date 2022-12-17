@@ -26,15 +26,21 @@ def get_the_html(url, element_to_wait=None):
     Returns:
         HTML string downloaded from URL
     """
+    logging.info("START: html_downloader.selenium.get_the_html()")
+    logging.info(f"URL={url}")
+
     firefox_options = Options()
     firefox_options.add_argument("--headless")
     driver = webdriver.Firefox(service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"), # TODO: Parametrize the log path
                             options=firefox_options)
     driver.implicitly_wait(implicit_wait_in_seconds)
-    driver.get(url)
-    if element_to_wait:
-        driver.find_element(By.XPATH, element_to_wait)
-    raw_html_string = driver.page_source
-    # logging.info(raw_html_string)
-    driver.quit()
-    return  BeautifulSoup(raw_html_string, "html.parser")
+
+    try:
+        driver.get(url)
+        if element_to_wait:
+            driver.find_element(By.XPATH, element_to_wait)
+        raw_html_string = driver.page_source
+        return  BeautifulSoup(raw_html_string, "html.parser")
+    finally:
+        driver.quit()
+        logging.info("END: html_downloader.selenium.get_the_html()")

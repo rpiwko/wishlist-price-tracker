@@ -22,7 +22,6 @@ def get_the_price(url):
     Returns:
         url (str): 
     """
-    logging.info("Getting price for URL: " + url)
     price = _find_price(html_downloader.get_the_html(url, return_bs4_object=True))
     return price
 
