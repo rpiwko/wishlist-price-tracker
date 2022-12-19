@@ -35,8 +35,9 @@ def format_and_validate_the_price(raw_price_string):
     Returns:
         Float number converted and formatted from price
     """
+    raw_price_string = str(raw_price_string)
     logging.info("Raw price string before formatting: " + raw_price_string)
-    price = str(raw_price_string).replace(",", ".").replace("zł", "").strip()
+    price = raw_price_string.replace(",", ".").replace("zł", "").strip()
     logging.info("Price string after formatting: " + price)
     validate_the_price(price)
     return price

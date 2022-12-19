@@ -29,7 +29,14 @@ def get_prices(url_list):
         logging.info("Getting prices for domain: " + domain)
         shop_module = supported_domains[domain]
         logging.info("Module to use: " + shop_module)
-        urls_with_prices = {**urls_with_prices, **_execute_get_the_prices_from_shop_module(shop_module, groupped_urls[domain])}
+        domain_urls_with_prices = _execute_get_prices_from_shop_module(shop_module, groupped_urls[domain])
+        for url in domain_urls_with_prices:
+            try:
+                urls_with_prices[url] = string_tools.format_and_validate_the_price(domain_urls_with_prices[url])
+            except ValueError as e:
+                logging.info(f"Unable to get valid price for URL='{url}': {str(e)}")
+                urls_with_prices[url] = None
+        
     return urls_with_prices
 
 
@@ -62,7 +69,7 @@ def _execute_get_the_price_from_shop_module(module, url):
     return namespace_for_exec["price"]
 
 
-def _execute_get_the_prices_from_shop_module(module, url_list):
+def _execute_get_prices_from_shop_module(module, url_list):
     namespace_for_exec = dict()
     exec(f"price = {module}.get_prices({url_list})", globals(), namespace_for_exec)
     return namespace_for_exec["price"]
