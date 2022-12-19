@@ -22,6 +22,17 @@ def get_the_price(url):
     return string_tools.format_and_validate_the_price(raw_price_string)
 
 
+def get_prices(url_list):
+    groupped_urls = _group_urls_by_domain(url_list)
+    urls_with_prices = {}
+    for domain in groupped_urls:
+        logging.info("Getting prices for domain: " + domain)
+        shop_module = supported_domains[domain]
+        logging.info("Module to use: " + shop_module)
+        urls_with_prices = {**urls_with_prices, **_execute_get_the_prices_from_shop_module(shop_module, groupped_urls[domain])}
+    return urls_with_prices
+
+
 def _validate_domain(url):
     """
     Checks whether URL domain is supported
@@ -49,3 +60,25 @@ def _execute_get_the_price_from_shop_module(module, url):
     namespace_for_exec = dict()
     exec(f"price = {module}.get_the_price('{url}')", globals(), namespace_for_exec)
     return namespace_for_exec["price"]
+
+
+def _execute_get_the_prices_from_shop_module(module, url_list):
+    namespace_for_exec = dict()
+    exec(f"price = {module}.get_prices({url_list})", globals(), namespace_for_exec)
+    return namespace_for_exec["price"]
+
+
+def _group_urls_by_domain(url_list):
+    grouped_urls = {}
+    for url in url_list:
+        try:
+            _validate_domain(url)
+            url_domain = string_tools.get_domain_from_url(url)
+            if url_domain not in grouped_urls:
+                grouped_urls[url_domain] = [url]
+            else:
+                grouped_urls[url_domain].append(url)
+        except ValueError as e:
+            logging.error(str(e))
+            logging.error("Skipping URL: " + url)
+    return grouped_urls

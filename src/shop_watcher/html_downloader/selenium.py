@@ -24,7 +24,7 @@ def get_the_html(url, element_to_wait=None):
         element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the html
 
     Returns:
-        HTML string downloaded from URL
+        BeautifulSoup object created with "html.parser" and representing HTML page
     """
     logging.info("START: html_downloader.selenium.get_the_html()")
     logging.info(f"URL={url}")
@@ -44,3 +44,11 @@ def get_the_html(url, element_to_wait=None):
     finally:
         driver.quit()
         logging.info("END: html_downloader.selenium.get_the_html()")
+
+
+def get_htmls(url_list, element_to_wait=None):
+    #TODO: Optimize to create only one driver instance for all URLs
+    urls_with_htmls = {}
+    for url in url_list:
+        urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
+    return urls_with_htmls

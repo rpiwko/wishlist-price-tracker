@@ -2,8 +2,10 @@
 Helper module with tools for common string operations
 """
 
+
 import logging
 import re
+
 
 def get_domain_from_url(url):
     """

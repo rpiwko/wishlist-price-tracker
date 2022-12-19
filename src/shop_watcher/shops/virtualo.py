@@ -22,8 +22,15 @@ def get_the_price(url):
     Returns:
         url (str): 
     """
-    price = _find_price(html_downloader.get_the_html(url, return_bs4_object=True))
-    return price
+    return _find_price(html_downloader.get_the_html(url))
+
+
+def get_prices(url_list):
+    urls_with_prices = {}
+    urls_with_htmls = html_downloader.get_htmls(url_list)
+    for url in urls_with_htmls:
+        urls_with_prices[url] = _find_price(urls_with_htmls[url])
+    return urls_with_prices
 
 
 def _find_price(html):

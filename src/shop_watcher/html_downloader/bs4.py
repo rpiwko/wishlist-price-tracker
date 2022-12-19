@@ -10,18 +10,17 @@ from bs4 import BeautifulSoup
 from contextlib import closing
 
 
-def get_the_html(url, return_bs4_object = False, ignore_response_codes=[]):
+def get_the_html(url, ignore_response_codes=[]):
+    # TODO: Consider removing ignore_response_codes parameter
     """
     Downloads HTML from URL
 
     Args:
         url (str): web page address to get the HTML from
         ignore_response_codes (list): response codes which won't throw exception
-        return_bs4_object (bool): flag to return pure string or BeautifulSoup object
 
     Returns:
-        If return_bs4_object is False then then HTML string downloaded from URL
-        If return_bs4_object is True then BeautifulSoup object created with "html.parser"
+        BeautifulSoup object created with "html.parser" and representing HTML page
     """
     logging.info("START: html_downloader.bs4.get_the_html()")
     logging.info(f"URL={url}")
@@ -32,10 +31,7 @@ def get_the_html(url, return_bs4_object = False, ignore_response_codes=[]):
         if _is_good_response(r, ignore_response_codes):
             raw_html_string = r.text
             logging.debug(f"Downloaded HTML:\n{raw_html_string}")
-            if return_bs4_object:
-                return  BeautifulSoup(raw_html_string, "html.parser")
-            else:
-                return raw_html_string
+            return BeautifulSoup(raw_html_string, "html.parser")
         else:
             error_text = "Request failed or response does not contain valid HTML!\n"
             error_text += f"Returned status code: {r.status_code}\n"
@@ -51,6 +47,13 @@ def get_the_html(url, return_bs4_object = False, ignore_response_codes=[]):
     finally:
         logging.info("END: html_downloader.bs4.get_the_html()")
     
+
+def get_htmls(url_list):
+    urls_with_htmls = {}
+    for url in url_list:
+        urls_with_htmls[url] = get_the_html(url)
+    return urls_with_htmls
+
 
 def _is_good_response(resp, ignore_response_codes):
     """

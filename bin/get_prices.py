@@ -26,9 +26,5 @@ dir_path = Path("./etc/").resolve()
 urls = json_manager.get_offers_urls(dir_path)
 logging.info("Found URLs:\n" + str(urls))
 
-for url in urls:
-    try:
-        current_price = shop_watcher.get_the_price(url)
-        json_manager.update_price(urls[url], url, current_price)
-    except Exception as e:
-        logging.error(f"Error occurred while processing {url}:\n{str(e)}")
+urls_with_prices = shop_watcher.get_prices(urls.keys())
+print(urls_with_prices)
