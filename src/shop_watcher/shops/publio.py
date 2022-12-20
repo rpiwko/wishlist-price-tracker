@@ -1,5 +1,5 @@
 """
-Module to find price on publio.pl
+Module to find prices on publio.pl
 """
 
 
@@ -14,19 +14,29 @@ def get_supported_domain():
 
 def get_the_price(url):
     """
-    Gets the price from URL
+    Gets the price from single URL
 
     Args:
         url(str): URL to publio.pl web store item
 
     Returns:
-        url (str): 
+        url (str): Raw price text extracted from HTML which may contain some garbage and formatting characters
     """
     price = _find_price(html_downloader.get_the_html(url, element_to_wait="//div[@class='prices']"))
     return price
 
 
 def get_prices(url_list):
+    """
+    Get the price from multiple URLs
+
+    Args:
+        url_list: list of URLs to get the prices from
+
+    Returns:
+        Dictonary with URLs and raw price texts: 
+        {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
+    """
     urls_with_prices = {}
     urls_with_htmls = html_downloader.get_htmls(url_list, element_to_wait="//div[@class='prices']")
     for url in urls_with_htmls:

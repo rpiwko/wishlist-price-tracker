@@ -6,7 +6,6 @@ HTML downloader for static pages
 import logging
 from requests import get, RequestException
 from bs4 import BeautifulSoup
-# from requests.exceptions import
 from contextlib import closing
 
 
@@ -52,6 +51,7 @@ def get_htmls(url_list):
     urls_with_htmls = {}
     for url in url_list:
         urls_with_htmls[url] = get_the_html(url)
+        #TODO: Add delay between requests!!!
     return urls_with_htmls
 
 

@@ -14,7 +14,7 @@ import shop_watcher.shops.virtualo as virtualo
 
 def get_prices(url_list):
     """
-    Get the price from single URL
+    Get the price from multiple URLs
 
     Args:
         url_list: list of URLs to get the prices from
