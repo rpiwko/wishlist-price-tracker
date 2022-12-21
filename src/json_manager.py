@@ -34,33 +34,44 @@ def get_offer_urls(path_to_file):
 
 
 def get_offers_urls(path_to_dir):
-    urls_to_return = {}
+    urls_with_files = {}
     for json_file in sorted(Path(path_to_dir).glob("**/*.json")):
         urls_in_json = get_offer_urls(json_file)
         for url in urls_in_json:
-            if url in urls_to_return:
+            if url in urls_with_files:
                 error_text = "The same URL in two different json files is not supported:"
                 error_text += "\nURL: " + url
-                error_text += "\nFile1: " + str(urls_to_return[url])
+                error_text += "\nFile1: " + str(urls_with_files[url])
                 error_text += "\nFile2: " + str(json_file)
                 raise KeyError(error_text)
-            urls_to_return[url] = json_file
-    return urls_to_return
+            urls_with_files[url] = json_file
+    return urls_with_files
                 
 
-def update_price(path, url, new_price):
+def update_the_price(path, url, new_price):
     json_dict = read_json_from_file(path)
+    ts = datetime.now().strftime(time_format)
     logging.info("Updating price in file: " + str(path))
     logging.info("...for URL: " + url)
+    logging.info("...with value: " + new_price)
+    logging.info("...and TS: " + ts)
     for offer in json_dict["offers"]:
         if offer["url"] == url:
-            ts = datetime.now().strftime(time_format)
+            logging.info("Old latestPrice: " + offer["latestPrice"])
+            logging.info("Old latestPriceDate: " + offer["latestPriceDate"])
             offer["latestPrice"] = new_price
             offer["latestPriceDate"] = ts
             if not offer["lowestPrice"] or (offer["lowestPrice"] and offer["lowestPrice"] > new_price):
+                logging.info("Old lowestPrice: " + offer["lowestPrice"])
+                logging.info("Old lowestPriceDate: " + offer["lowestPriceDate"])
                 offer["lowestPrice"] = new_price
                 offer["lowestPriceDate"] = ts
             save_json_to_file(json_dict, path)
+
+
+def update_prices(urls_with_files, urls_with_prices):
+    for url in urls_with_prices:
+        update_the_price(urls_with_files[url], url, urls_with_prices[url])
 
 
 def update_availability(path, url, available):

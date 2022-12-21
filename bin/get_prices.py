@@ -23,8 +23,10 @@ logging.info("")
 
 
 dir_path = Path("./etc/").resolve()
-urls = json_manager.get_offers_urls(dir_path)
-logging.info("Found URLs:\n" + str(urls))
+urls_with_files = json_manager.get_offers_urls(dir_path)
+logging.info("Found URLs:\n" + str(urls_with_files))
 
-urls_with_prices = shop_watcher.get_prices(urls.keys())
+urls_with_prices = shop_watcher.get_prices(urls_with_files.keys())
 print(urls_with_prices)
+
+json_manager.update_prices(urls_with_files, urls_with_prices)
