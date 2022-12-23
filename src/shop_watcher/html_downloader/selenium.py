@@ -13,6 +13,9 @@ import time
 import random
 
 
+# WebDriver instance
+driver = None
+
 # Delays range used to avoid being banned
 delay_min_sec = 2
 delay_max_sec = 6
@@ -21,8 +24,7 @@ delay_max_sec = 6
 implicit_wait_in_seconds = 10
 
 
-def get_the_html(url, element_to_wait=None):
-    # TODO: Consider removing ignore_response_codes parameter
+def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     # TODO: Add mechanism do automatic retry
     """
     Downloads HTML from URL
@@ -36,32 +38,42 @@ def get_the_html(url, element_to_wait=None):
     """
     logging.info("START: html_downloader.selenium.get_the_html()")
     logging.info(f"URL={url}")
-
-    firefox_options = Options()
-    firefox_options.add_argument("--headless")
-    driver = webdriver.Firefox(service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"), # TODO: Parametrize the log path
-                            options=firefox_options)
-    driver.implicitly_wait(implicit_wait_in_seconds)
-
     try:
+        _create_driver_if_needed()
         driver.get(url)
         if element_to_wait:
             driver.find_element(By.XPATH, element_to_wait)
         raw_html_string = driver.page_source
         return  BeautifulSoup(raw_html_string, "html.parser")
     finally:
-        driver.quit()
+        if quit_webdriver:
+            driver.quit()
+            logging.info("WebDriver object was disposed")
         logging.info("END: html_downloader.selenium.get_the_html()")
 
 
 def get_htmls(url_list, element_to_wait=None):
-    #TODO: Optimize to create only one driver instance for all URLs
     urls_with_htmls = {}
     for url in url_list:
-        urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
         if url_list.index(url) < len(url_list) - 1:
+            urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait, quit_webdriver=False)
             _pause_execution()
+        else:
+            urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
     return urls_with_htmls
+
+
+def _create_driver_if_needed():
+    global driver
+    if driver is None:
+        logging.info("WebDriver not found. New instance will be created")
+        firefox_options = Options()
+        firefox_options.add_argument("--headless")
+        driver = webdriver.Firefox(service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"), # TODO: Parametrize the log path
+                                options=firefox_options)
+        driver.implicitly_wait(implicit_wait_in_seconds)
+    else:
+        logging.info("WebDriver found. No need to create new one")
 
 
 def _pause_execution(pause_time_in_sec=0):
