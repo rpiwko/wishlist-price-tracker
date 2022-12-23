@@ -9,13 +9,21 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
+import time
+import random
 
+
+# Delays range used to avoid being banned
+delay_min_sec = 2
+delay_max_sec = 6
 
 # How long WebDriver will poll DOM for element_to_wait
 implicit_wait_in_seconds = 10
 
 
 def get_the_html(url, element_to_wait=None):
+    # TODO: Consider removing ignore_response_codes parameter
+    # TODO: Add mechanism do automatic retry
     """
     Downloads HTML from URL
 
@@ -51,4 +59,16 @@ def get_htmls(url_list, element_to_wait=None):
     urls_with_htmls = {}
     for url in url_list:
         urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
+        if url_list.index(url) < len(url_list) - 1:
+            _pause_execution()
     return urls_with_htmls
+
+
+def _pause_execution(pause_time_in_sec=0):
+    if pause_time_in_sec:
+        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        time.sleep(pause_time_in_sec)
+    else:
+        pause_time_in_sec = random.randint(delay_min_sec, delay_max_sec)
+        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        time.sleep(pause_time_in_sec)
