@@ -52,20 +52,21 @@ def update_the_price(path, url, new_price):
     json_dict = read_json_from_file(path)
     ts = datetime.now().strftime(time_format)
     logging.info("Updating price in file: " + str(path))
-    logging.info("...for URL: " + url)
-    logging.info("...with value: " + new_price)
+    logging.info("...for URL: " + str(url))
+    logging.info("...with value: " + str(new_price))
     logging.info("...and TS: " + ts)
     for offer in json_dict["offers"]:
         if offer["url"] == url:
-            logging.info("Old latestPrice: " + offer["latestPrice"])
-            logging.info("Old latestPriceDate: " + offer["latestPriceDate"])
+            logging.info("Old latestPrice: " + str(offer["latestPrice"]))
+            logging.info("Old latestPriceDate: " + str(offer["latestPriceDate"]))
             offer["latestPrice"] = new_price
             offer["latestPriceDate"] = ts
-            if not offer["lowestPrice"] or (offer["lowestPrice"] and offer["lowestPrice"] > new_price):
-                logging.info("Old lowestPrice: " + offer["lowestPrice"])
-                logging.info("Old lowestPriceDate: " + offer["lowestPriceDate"])
-                offer["lowestPrice"] = new_price
-                offer["lowestPriceDate"] = ts
+            if new_price:
+                if not offer["lowestPrice"] or offer["lowestPrice"] > new_price:
+                    logging.info("Old lowestPrice: " + str(offer["lowestPrice"]))
+                    logging.info("Old lowestPriceDate: " + str(offer["lowestPriceDate"]))
+                    offer["lowestPrice"] = new_price
+                    offer["lowestPriceDate"] = ts
             save_json_to_file(json_dict, path)
 
 

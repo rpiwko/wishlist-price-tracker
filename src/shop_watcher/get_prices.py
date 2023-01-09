@@ -20,33 +20,37 @@ def get_prices(url_list):
         url_list: list of URLs to get the prices from
 
     Returns:
-        Dictonary with URLs and prices as valid float number:
+        Dictonary with URLs and prices as valid float numbers:
         {"url1": 12.34, "url2": 56.78, "url3": None, "url4": 99.99...}
         If price could not be extracted from URL, then appropriate error is logged and price is set to None
     """
     groupped_urls = _group_urls_by_domain(url_list)
     urls_with_prices = {}
     for domain in groupped_urls:
-        logging.info("Getting prices for domain: " + domain)
+        logging.info(f"Getting prices for {domain} started")
         shop_module = domains_manager.supported_domains[domain]
         logging.info("Module to use: " + shop_module)
         domain_urls_with_prices = _execute_get_prices_from_shop_module(shop_module, groupped_urls[domain])
         for url in domain_urls_with_prices:
-            try:
-                urls_with_prices[url] = string_tools.format_and_validate_the_price(domain_urls_with_prices[url])
-            except ValueError as e:
-                logging.error(f"Unable to get valid price for URL='{url}': {str(e)}")
+            if domain_urls_with_prices[url]:
+                try:
+                    logging.info("Formatting and validating price found under URL=" + url)
+                    urls_with_prices[url] = string_tools.format_and_validate_the_price(domain_urls_with_prices[url])
+                except ValueError as e:
+                    logging.error(f"Unable to get valid price for URL='{url}': {str(e)}")
+                    urls_with_prices[url] = None
+            else:
                 urls_with_prices[url] = None
-        
+        logging.info(f"Getting prices for {domain} completed!")
     return urls_with_prices
 
 
-def _execute_get_prices_from_shop_module(module, url_list):
+def _execute_get_prices_from_shop_module(shop_module, url_list):
     """
     Executes get_prices() method from target shop module
 
     Args:
-        module (str): target shop module to execute the get_the_price() method from
+        shop_module (str): target shop module to execute the get_the_price() method from
         url_list: list of URLs to get the prices from, passed to get_prices()
     
     Returns:
@@ -54,7 +58,7 @@ def _execute_get_prices_from_shop_module(module, url_list):
         {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
     """
     namespace_for_exec = dict()
-    exec(f"urls_with_prices = {module}.get_prices({url_list})", globals(), namespace_for_exec)
+    exec(f"urls_with_prices = {shop_module}.get_prices({url_list})", globals(), namespace_for_exec)
     return namespace_for_exec["urls_with_prices"]
 
 

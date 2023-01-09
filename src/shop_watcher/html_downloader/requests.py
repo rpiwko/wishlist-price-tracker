@@ -18,7 +18,6 @@ delay_max_sec = 6
 
 def get_the_html(url, ignore_response_codes=[]):
     # TODO: Consider removing ignore_response_codes parameter
-    # TODO: Add mechanism do automatic retry
     """
     Downloads HTML from URL
 
@@ -50,6 +49,7 @@ def get_the_html(url, ignore_response_codes=[]):
             raise ValueError("Response does not contain valid HTML!")
     except RequestException as e:
         logging.error(f"Unhandled exception occurred!\n{str(e)}")
+        # TODO: Add mechanism to automatic retry
         raise
     finally:
         logging.info("END: html_downloader.requests.get_the_html()")
@@ -58,9 +58,14 @@ def get_the_html(url, ignore_response_codes=[]):
 def get_htmls(url_list):
     urls_with_htmls = {}
     for url in url_list:
-        urls_with_htmls[url] = get_the_html(url)
-        if url_list.index(url) < len(url_list) - 1:
-            _pause_execution()
+        try:
+            urls_with_htmls[url] = get_the_html(url)
+            if url_list.index(url) < len(url_list) - 1:
+                _pause_execution()
+        except Exception as e:
+            logging.error(f"Unable to extract HTML from URL='{url}' because of error:\n{str(e)}")
+            urls_with_htmls[url] = None
+            continue
     return urls_with_htmls
 
 

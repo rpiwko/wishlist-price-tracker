@@ -25,13 +25,13 @@ implicit_wait_in_seconds = 10
 
 
 def get_the_html(url, element_to_wait=None, quit_webdriver=True):
-    # TODO: Add mechanism do automatic retry
     """
     Downloads HTML from URL
 
     Args:
         url (str): web page address to get the HTML from
         element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the html
+        quit_webdriver (bool): if True, then driver.quit() will be called in finally block 
 
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
@@ -45,6 +45,10 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
             driver.find_element(By.XPATH, element_to_wait)
         raw_html_string = driver.page_source
         return  BeautifulSoup(raw_html_string, "html.parser")
+    except Exception as e:
+        logging.error(f"Unhandled exception occurred!\n{str(e)}")
+        # TODO: Add mechanism to automatic retry
+        raise
     finally:
         if quit_webdriver:
             driver.quit()
@@ -55,11 +59,17 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
 def get_htmls(url_list, element_to_wait=None):
     urls_with_htmls = {}
     for url in url_list:
-        if url_list.index(url) < len(url_list) - 1:
-            urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait, quit_webdriver=False)
-            _pause_execution()
-        else:
-            urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
+        try:
+            if url_list.index(url) < len(url_list) - 1:
+                urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait, quit_webdriver=False)
+                _pause_execution()
+            else:
+                urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
+        except Exception as e:
+            logging.error(f"Unable to extract HTML from URL='{url}' because of error:\n{str(e)}")
+            urls_with_htmls[url] = None
+            continue
+
     return urls_with_htmls
 
 
