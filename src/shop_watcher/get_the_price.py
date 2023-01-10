@@ -3,11 +3,12 @@ Get the price from single URL
 """
 
 
+import logging
 import shop_watcher.domains_manager as domains_manager
 import shop_watcher.string_tools as string_tools
-import shop_watcher.shops.publio as publio
-import shop_watcher.shops.nexto as nexto
-import shop_watcher.shops.virtualo as virtualo
+import shop_watcher.shops.publio
+import shop_watcher.shops.nexto
+import shop_watcher.shops.virtualo
 
 
 def get_the_price(url):
@@ -28,18 +29,18 @@ def get_the_price(url):
     return string_tools.format_and_validate_the_price(raw_price_string)
 
 
-def _execute_get_the_price_from_shop_module(module, url):
+def _execute_get_the_price_from_shop_module(shop_module, url):
     """
     Executes get_the_price() method from target shop module
 
     Args:
-        module (str): target shop module to execute the get_the_price() method from
+        shop_module (str): target shop module to execute the get_the_price() method from
         url (str): URL to get the price from, passed to get_the_price()
     
     Returns:
         Raw price text extracted from HTML which may contain some garbage and formatting characters
     """
     namespace_for_exec = dict()
-    exec(f"price = {module}.get_the_price('{url}')", globals(), namespace_for_exec)
+    exec(f"price = shop_watcher.shops.{shop_module}.{shop_module}().get_the_price('{url}')", globals(), namespace_for_exec)
     return namespace_for_exec["price"]
 

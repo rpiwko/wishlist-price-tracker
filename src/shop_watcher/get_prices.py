@@ -5,11 +5,10 @@ Get prices from multiple URLs
 
 import logging
 import shop_watcher.domains_manager as domains_manager
-from shop_watcher.get_the_price import get_the_price as get_the_price
 import shop_watcher.string_tools as string_tools
-import shop_watcher.shops.publio as publio
-import shop_watcher.shops.nexto as nexto
-import shop_watcher.shops.virtualo as virtualo
+import shop_watcher.shops.publio
+import shop_watcher.shops.nexto
+import shop_watcher.shops.virtualo
 
 
 def get_prices(url_list):
@@ -50,7 +49,7 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
     Executes get_prices() method from target shop module
 
     Args:
-        shop_module (str): target shop module to execute the get_the_price() method from
+        shop_module (str): target shop module to execute the get_prices() method from
         url_list: list of URLs to get the prices from, passed to get_prices()
     
     Returns:
@@ -58,7 +57,7 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
         {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
     """
     namespace_for_exec = dict()
-    exec(f"urls_with_prices = {shop_module}.get_prices({url_list})", globals(), namespace_for_exec)
+    exec(f"urls_with_prices = shop_watcher.shops.{shop_module}.{shop_module}().get_prices({url_list})", globals(), namespace_for_exec)
     return namespace_for_exec["urls_with_prices"]
 
 
