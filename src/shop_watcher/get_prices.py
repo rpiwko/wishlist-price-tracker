@@ -4,11 +4,9 @@ Get prices from multiple URLs
 
 
 import logging
-import shop_watcher.domains_manager as domains_manager
-import shop_watcher.string_tools as string_tools
-import shop_watcher.shops.publio
-import shop_watcher.shops.nexto
-import shop_watcher.shops.virtualo
+from shop_watcher import domains_manager
+from shop_watcher import string_tools
+import shop_watcher
 
 
 def get_prices(url_list):
