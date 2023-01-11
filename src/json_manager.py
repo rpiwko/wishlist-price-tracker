@@ -34,6 +34,7 @@ def get_offer_urls(path_to_file):
 
 
 def get_offers_urls(path_to_dir):
+    logging.info("Extracting offers URLs from dir: " + str(path_to_dir))
     urls_with_files = {}
     for json_file in sorted(Path(path_to_dir).glob("**/*.json")):
         urls_in_json = get_offer_urls(json_file)

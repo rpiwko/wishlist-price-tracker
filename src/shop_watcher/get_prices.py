@@ -9,6 +9,9 @@ from shop_watcher import string_tools
 import shop_watcher
 
 
+domains_manager.import_shop_modules()
+
+
 def get_prices(url_list):
     """
     Get the price from multiple URLs
@@ -25,7 +28,7 @@ def get_prices(url_list):
     urls_with_prices = {}
     for domain in groupped_urls:
         logging.info(f"Getting prices for {domain} started")
-        shop_module = domains_manager.supported_domains[domain]
+        shop_module = domains_manager.get_shop_module_for_domain(domain)
         logging.info("Module to use: " + shop_module)
         domain_urls_with_prices = _execute_get_prices_from_shop_module(shop_module, groupped_urls[domain])
         for url in domain_urls_with_prices:
@@ -55,7 +58,8 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
         {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
     """
     namespace_for_exec = dict()
-    exec(f"urls_with_prices = shop_watcher.shops.{shop_module}.{shop_module}().get_prices({url_list})", globals(), namespace_for_exec)
+    module_class = shop_module.rsplit('.', 1)[-1]
+    exec(f"urls_with_prices = {shop_module}.{module_class}().get_prices({url_list})", globals(), namespace_for_exec)
     return namespace_for_exec["urls_with_prices"]
 
 
@@ -73,13 +77,12 @@ def _group_urls_by_domain(url_list):
     grouped_urls = {}
     for url in url_list:
         try:
-            domains_manager.validate_domain(url)
-            url_domain = string_tools.get_domain_from_url(url)
-            if url_domain not in grouped_urls:
-                grouped_urls[url_domain] = [url]
+            domain = string_tools.get_domain_from_url(url)
+            domains_manager.validate_domain(domain)            
+            if domain not in grouped_urls:
+                grouped_urls[domain] = [url]
             else:
-                grouped_urls[url_domain].append(url)
+                grouped_urls[domain].append(url)
         except ValueError as e:
-            logging.error(str(e))
             logging.error("Skipping URL: " + url)
     return grouped_urls
