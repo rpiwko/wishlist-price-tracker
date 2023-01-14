@@ -1,5 +1,5 @@
 """
-Main script to download latest prices
+Logging management module
 """
 
 

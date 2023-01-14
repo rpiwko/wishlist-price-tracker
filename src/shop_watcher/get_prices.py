@@ -24,13 +24,13 @@ def get_prices(url_list):
         {"url1": 12.34, "url2": 56.78, "url3": None, "url4": 99.99...}
         If price could not be extracted from URL, then appropriate error is logged and price is set to None
     """
-    groupped_urls = _group_urls_by_domain(url_list)
+    grouped_urls = _group_urls_by_domain(url_list)
     urls_with_prices = {}
-    for domain in groupped_urls:
+    for domain in grouped_urls:
         logging.info(f"Getting prices for {domain} started")
         shop_module = domains_manager.get_shop_module_for_domain(domain)
         logging.info("Module to use: " + shop_module)
-        domain_urls_with_prices = _execute_get_prices_from_shop_module(shop_module, groupped_urls[domain])
+        domain_urls_with_prices = _execute_get_prices_from_shop_module(shop_module, grouped_urls[domain])
         for url in domain_urls_with_prices:
             if domain_urls_with_prices[url]:
                 try:
@@ -71,7 +71,7 @@ def _group_urls_by_domain(url_list):
         url_list: list of URLs to group
     
     Returns:
-        Dictionary with URLs groupped by domain:
+        Dictionary with URLs grouped by domain:
         {"domain1": ["url1", "url2"...], "domain2": ["url3", "url4"...], "domain3": ["url5", "url6"...]}
     """
     grouped_urls = {}

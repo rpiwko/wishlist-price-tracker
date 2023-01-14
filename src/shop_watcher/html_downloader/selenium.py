@@ -30,7 +30,7 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
 
     Args:
         url (str): web page address to get the HTML from
-        element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the html
+        element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the HTML
         quit_webdriver (bool): if True, then driver.quit() will be called in finally block 
 
     Returns:
