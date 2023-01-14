@@ -1,4 +1,4 @@
-.wpt-env/*
+env/*
 logs/*
 *.log
 *.bak
