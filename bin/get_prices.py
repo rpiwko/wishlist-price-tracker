@@ -23,7 +23,11 @@ logging.info("")
 
 
 print("##### Test get_the_price()")
-print(shop_watcher.get_the_price("https://www.nexto.pl/ebooki/do_cna_p1306641.xml"))
+print("nexto.pl: " + shop_watcher.get_the_price("https://www.nexto.pl/ebooki/hobbit,_czyli_tam_i_z_powrotem_p1249864.xml"))
+print("planszomania.pl: " + shop_watcher.get_the_price("https://www.planszomania.pl/strategiczne/25596/Black-Rose-Wars-edycja-podstawowa.html"))
+print("virtualo.pl: " + shop_watcher.get_the_price("https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/"))
+print("publio.pl: " + shop_watcher.get_the_price("https://www.publio.pl/hobbit-j-r-r-tolkien,p87958.html"))
+
 
 print()
 print("##### Test get_prices()")
@@ -35,5 +39,3 @@ urls_with_prices = shop_watcher.get_prices(urls_with_files.keys())
 print(urls_with_prices)
 
 json_manager.update_prices(urls_with_files, urls_with_prices)
-
-

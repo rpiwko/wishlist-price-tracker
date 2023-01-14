@@ -23,7 +23,7 @@ def import_shop_modules():
     import os
     import importlib
     for file in os.listdir(os.path.dirname(__file__) + "/shops/"):
-        if file.endswith(".py") and file != "base_shop.py":
+        if file.endswith(".py") and file not in ["base_static_page_shop.py", "base_dynamic_page_shop.py"]:
             shop_name = file[:-3]
             module_name = "shop_watcher.shops." + shop_name
             # print(f"Loading module '{module_name}' for shop '{shop_name}'")

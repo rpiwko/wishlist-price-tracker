@@ -42,8 +42,7 @@ def _execute_get_the_price_from_shop_module(shop_module, url):
     Returns:
         Raw price text extracted from HTML which may contain some garbage and formatting characters
     """
-    namespace_for_exec = dict()
     module_class = shop_module.rsplit('.', 1)[-1]
-    exec(f"price = {shop_module}.{module_class}().get_the_price('{url}')", globals(), namespace_for_exec)
-    return namespace_for_exec["price"]
+    raw_price_string = eval(f"{shop_module}.{module_class}().get_the_price('{url}')")
+    return raw_price_string
 

@@ -38,6 +38,7 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     """
     logging.info("START: html_downloader.selenium.get_the_html()")
     logging.info(f"URL={url}")
+    global driver
     try:
         _create_driver_if_needed()
         driver.get(url)
@@ -52,6 +53,7 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     finally:
         if quit_webdriver:
             driver.quit()
+            driver = None
             logging.info("WebDriver object was disposed")
         logging.info("END: html_downloader.selenium.get_the_html()")
 
@@ -75,7 +77,7 @@ def get_htmls(url_list, element_to_wait=None):
 
 def _create_driver_if_needed():
     global driver
-    if driver is None:
+    if not driver:
         logging.info("WebDriver not found. New instance will be created")
         firefox_options = Options()
         firefox_options.add_argument("--headless")
