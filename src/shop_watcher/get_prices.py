@@ -20,8 +20,8 @@ def get_prices(url_list):
         url_list: list of URLs to get the prices from
 
     Returns:
-        Dictonary with URLs and prices as valid float numbers:
-        {"url1": 12.34, "url2": 56.78, "url3": None, "url4": 99.99...}
+        Dictonary with URLs, prices as valid float numbers and availability flags:
+        {"url1": [12.34, True], "url2": [56.78, True], "url3": [None, False], "url4": [99.99, False]...}
         If price could not be extracted from URL, then appropriate error is logged and price is set to None
     """
     grouped_urls = _group_urls_by_domain(url_list)
@@ -35,12 +35,13 @@ def get_prices(url_list):
             if domain_urls_with_prices[url]:
                 try:
                     logging.info("Formatting and validating price found under URL=" + url)
-                    urls_with_prices[url] = string_tools.format_and_validate_the_price(domain_urls_with_prices[url])
+                    valid_price_string = string_tools.format_and_validate_the_price(domain_urls_with_prices[url][0])
+                    urls_with_prices[url] = valid_price_string, domain_urls_with_prices[url][1]
                 except ValueError as e:
                     logging.error(f"Unable to get valid price for URL='{url}': {str(e)}")
-                    urls_with_prices[url] = None
+                    urls_with_prices[url] = None, domain_urls_with_prices[url][1]
             else:
-                urls_with_prices[url] = None
+                urls_with_prices[url] = None, None
         logging.info(f"Getting prices for {domain} completed!")
     return urls_with_prices
 
@@ -54,8 +55,8 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
         url_list: list of URLs to get the prices from, passed to get_prices()
     
     Returns:
-        Dictonary with URLs and raw price texts: 
-        {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
+        Dictonary with URLs, raw price texts and availability flags:
+        {"url1": ["raw_price_text1", True], "url2": ["raw_price_text2", True], "url3": ["raw_price_text3", False]...}
     """
     namespace_for_exec = dict()
     module_class = shop_module.rsplit('.', 1)[-1]

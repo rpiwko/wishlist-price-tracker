@@ -13,9 +13,20 @@ class planszomania(base_static_page_shop):
         return "planszomania.pl"
 
 
-    def _find_price_in_html(self, html):
+    def _get_price_and_availability_from_html(self, html):
+        price_string = None
+        is_available = None
         if html:
+            is_available = self._is_available(html)
+            logging.info("is_availabe=" + str(is_available))
+            # Price is still shown even when item is not avilable
             price_tag = html.find_all("div", id="price_tag")
             assert len(price_tag) == 1, f"Expected one <price_tag> tag but getting {len(price_tag)}"
             price_string = price_tag[0].find("strong").get_text()
-            return price_string
+            logging.info("price_string=" + price_string)
+        return price_string, is_available
+
+
+    def _is_available(self, html):
+        not_available_tag = html.find_all(lambda tag:tag.name=="span" and "niedostępny" in tag.text, class_="span_error")
+        return len(not_available_tag) == 0
