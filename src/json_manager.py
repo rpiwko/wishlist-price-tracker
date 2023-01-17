@@ -7,6 +7,7 @@ import logging
 import json
 from datetime import datetime
 from pathlib import Path
+import shutil
 
 
 time_format = "%Y-%m-%d %H:%M"
@@ -26,8 +27,10 @@ def read_jsons_from_files(dir_path):
     return items
 
 
-def save_json_to_file(json_dict, file_path):
+def save_json_to_file(json_dict, file_path, backup_file=True):
     logging.info("Saving file: " + str(file_path))
+    if backup_file:
+        _make_a_backup(file_path)
     with open(file_path, "w") as json_file:
         json_file.write(json.dumps(json_dict, indent=4, ensure_ascii=False))
 
@@ -88,3 +91,9 @@ def update_prices(urls_with_files, urls_with_prices_and_availability):
         new_price = urls_with_prices_and_availability[url][0]
         is_avilable = urls_with_prices_and_availability[url][1]
         update_the_price_and_availability(urls_with_files[url], url, new_price, is_avilable)
+
+
+def _make_a_backup(file_path):
+    src = str(file_path)
+    dst = src + ".BAK"
+    shutil.copy(src, dst)
