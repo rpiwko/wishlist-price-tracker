@@ -29,7 +29,7 @@ def read_jsons_from_files(dir_path):
 def save_json_to_file(json_dict, file_path):
     logging.info("Saving file: " + str(file_path))
     with open(file_path, "w") as json_file:
-        json.dump(json_dict, json_file, indent=4)
+        json_file.write(json.dumps(json_dict, indent=4, ensure_ascii=False))
 
 
 def get_offer_urls(file_path):
