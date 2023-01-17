@@ -36,8 +36,8 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
     """
-    logging.info("START: html_downloader.selenium.get_the_html()")
-    logging.info(f"URL={url}")
+    logging.info("Getting HTML with html_downloader.selenium for URL=" + url)
+
     global driver
     try:
         _create_driver_if_needed()
@@ -55,7 +55,6 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
             driver.quit()
             driver = None
             logging.info("WebDriver object was disposed")
-        logging.info("END: html_downloader.selenium.get_the_html()")
 
 
 def get_htmls(url_list, element_to_wait=None):

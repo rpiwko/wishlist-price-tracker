@@ -19,7 +19,7 @@ class nexto(base_static_page_shop):
         is_available = None
         if html:
             is_available = self._is_available(html)
-            logging.info("is_availabe=" + str(is_available))
+            logging.info("is_available=" + str(is_available))
             # If not is_available, then price is not shown so skip further checking
             if is_available:
                 price_tag = html.find_all("div", class_="prices")

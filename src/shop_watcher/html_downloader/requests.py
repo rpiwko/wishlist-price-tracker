@@ -28,8 +28,7 @@ def get_the_html(url, ignore_response_codes=[]):
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
     """
-    logging.info("START: html_downloader.requests.get_the_html()")
-    logging.info(f"URL={url}")
+    logging.info("Getting HTML with html_downloader.requests for URL=" + url)
     
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0'}
@@ -51,9 +50,7 @@ def get_the_html(url, ignore_response_codes=[]):
         logging.error(f"Unhandled exception occurred!\n{str(e)}")
         # TODO: Add mechanism to automatic retry
         raise
-    finally:
-        logging.info("END: html_downloader.requests.get_the_html()")
-    
+
 
 def get_htmls(url_list):
     urls_with_htmls = {}

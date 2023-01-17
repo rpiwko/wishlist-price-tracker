@@ -50,6 +50,7 @@ overridden in each class which inherits from base_dynamic_page_shop!")
         urls_with_prices = {}
         urls_with_htmls = html_downloader.get_htmls(url_list, element_to_wait=self.get_element_to_wait())
         for url in urls_with_htmls:
+            logging.info("Searching price and availability in HTML for URL=" + url)
             try:
                 urls_with_prices[url] = self._get_price_and_availability_from_html(urls_with_htmls[url])
             except Exception as e:

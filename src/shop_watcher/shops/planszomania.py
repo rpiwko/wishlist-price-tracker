@@ -18,7 +18,7 @@ class planszomania(base_static_page_shop):
         is_available = None
         if html:
             is_available = self._is_available(html)
-            logging.info("is_availabe=" + str(is_available))
+            logging.info("is_available=" + str(is_available))
             # Price is still shown even when item is not avilable
             price_tag = html.find_all("div", id="price_tag")
             assert len(price_tag) == 1, f"Expected one <price_tag> tag but getting {len(price_tag)}"
