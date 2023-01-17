@@ -12,31 +12,38 @@ from pathlib import Path
 time_format = "%Y-%m-%d %H:%M"
 
 
-def read_json_from_file(path):
-    logging.info("Reading file: " + str(path))
-    with open(path, "r") as json_file:
+def read_json_from_file(file_path):
+    logging.info("Reading file: " + str(file_path))
+    with open(file_path, "r") as json_file:
         data = json.load(json_file)
     return data
 
 
-def save_json_to_file(json_dict, path):
-    logging.info("Saving file: " + str(path))
-    with open(path, "w") as json_file:
+def read_jsons_from_files(dir_path):
+    items = []
+    for json_file in sorted(Path(dir_path).glob("**/*.json")):
+        items.append(read_json_from_file(json_file))
+    return items
+
+
+def save_json_to_file(json_dict, file_path):
+    logging.info("Saving file: " + str(file_path))
+    with open(file_path, "w") as json_file:
         json.dump(json_dict, json_file, indent=4)
 
 
-def get_offer_urls(path_to_file):
-    json_dict = read_json_from_file(path_to_file)
+def get_offer_urls(file_path):
+    json_dict = read_json_from_file(file_path)
     urls = []
     for offer in json_dict["offers"]:
         urls.append(offer["url"])
     return urls
 
 
-def get_offers_urls(path_to_dir):
-    logging.info("Extracting offers URLs from dir: " + str(path_to_dir))
+def get_offers_urls(dir_path):
+    logging.info("Extracting offers URLs from dir: " + str(dir_path))
     urls_with_files = {}
-    for json_file in sorted(Path(path_to_dir).glob("**/*.json")):
+    for json_file in sorted(Path(dir_path).glob("**/*.json")):
         urls_in_json = get_offer_urls(json_file)
         for url in urls_in_json:
             if url in urls_with_files:
@@ -49,10 +56,10 @@ def get_offers_urls(path_to_dir):
     return urls_with_files
                 
 
-def update_the_price_and_availability(path, url, new_price, is_available):
-    json_dict = read_json_from_file(path)
+def update_the_price_and_availability(file_path, url, new_price, is_available):
+    json_dict = read_json_from_file(file_path)
     ts = datetime.now().strftime(time_format)
-    logging.info("Updating price in file: " + str(path))
+    logging.info("Updating price in file: " + str(file_path))
     logging.info("...for URL: " + str(url))
     logging.info("...with value: " + str(new_price))
     logging.info("...with TS: " + ts)
@@ -73,7 +80,7 @@ def update_the_price_and_availability(path, url, new_price, is_available):
                     logging.info("Previous lowestPriceDate: " + str(offer["lowestPriceDate"]))
                     offer["lowestPrice"] = new_price
                     offer["lowestPriceDate"] = ts
-            save_json_to_file(json_dict, path)
+            save_json_to_file(json_dict, file_path)
 
 
 def update_prices(urls_with_files, urls_with_prices_and_availability):
@@ -81,9 +88,3 @@ def update_prices(urls_with_files, urls_with_prices_and_availability):
         new_price = urls_with_prices_and_availability[url][0]
         is_avilable = urls_with_prices_and_availability[url][1]
         update_the_price_and_availability(urls_with_files[url], url, new_price, is_avilable)
-
-
-def update_availability(path, url, available):
-    raise NotImplementedError()
-
-
