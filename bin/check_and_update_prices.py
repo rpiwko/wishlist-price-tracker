@@ -45,6 +45,12 @@ results = shop_watcher.get_the_price("https://ebookpoint.pl/ksiazki/powierniczka
 print("ebookpoint.pl - available item w/o promo: " + str(results))
 results = shop_watcher.get_the_price("https://ebookpoint.pl/ksiazki/spiacy-giganci-sylvain-neuvel,e_0b1m.htm#format/e")
 print("ebookpoint.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://woblink.com/ebook/polmistrz-mariusz-czubaj-268504u")
+print("woblink.com - available item w promo: " + str(results))
+results = shop_watcher.get_the_price("https://woblink.com/ebook/zly-tyrmand-mariusz-urbanek-252420u")
+print("woblink.com - available item w/o promo: " + str(results))
+results = shop_watcher.get_the_price("https://woblink.com/ksiazka/sienkiewicz-polityczny-sienkiewicz-ideologiczny--56343")
+print("woblink.com - not available item: " + str(results))
 
 print("")
 print("##### Test get_prices()")
