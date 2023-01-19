@@ -25,8 +25,15 @@ def build_table_from_objects(objects_list):
     # Add items
     for item in objects_list:
         offers_no = len(item["offers"])
-        html_table += f"<tr><td rowspan={offers_no}>{item['title']}</td>"
-        for offer in item["offers"]:
+        if offers_no == 1:
+            html_table += f"<tr><td>{item['title']}</td>"
+        else:
+            html_table += f"<tr><td rowspan={offers_no}>{item['title']}</td>"
+
+        for n in range(offers_no):
+            if n > 0:
+                html_table += "<tr>"
+            offer = item["offers"][n]
             url = offer['url']
             html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
             html_table += get_is_available_cell(offer)
