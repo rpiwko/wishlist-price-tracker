@@ -17,8 +17,9 @@ def build_table_from_objects(objects_list):
     html_table += "<tr><th>Title</th>"
     html_table += "<th>URL</th>"
     html_table += "<th>Available</th>"
-    html_table += "<th>Latest Price</th>"
     html_table += "<th>Lowest Price</th>"
+    html_table += "<th>Latest Price</th>"
+    html_table += "<th>Highest Price</th>"
     html_table += "</tr>\n"
 
     # Add items
@@ -56,16 +57,25 @@ def get_is_available_cell(offer):
     return cell
 
 def get_cells_with_prices(offer):
-    cell = f"<td>{offer['latestPrice']}</td>"
-    cell += f"<td>{offer['lowestPrice']}</td>"
-    try:
-        if offer["isAvailable"] and float(offer["latestPrice"]) == float(offer["lowestPrice"]):
-            cell = cell.replace("<td>", f"<td class=\"{good_value_class}\">")
-        if float(offer["latestPrice"]) > float(offer["lowestPrice"]):
-            cell = cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
-    except ValueError:
-        pass
-    return cell
+    lowest_price_cell = f"<td>{offer['lowestPrice']}</td>"
+    latest_price_cell = f"<td>{offer['latestPrice']}</td>"
+    highest_price_cell = f"<td>{offer['highestPrice']}</td>"
+    if offer["isAvailable"]:
+        try:
+            # All three prices are equal -> no need to add any color
+            if float(offer["lowestPrice"]) == float(offer["highestPrice"]):
+                pass
+            # Latest price is the lowest one -> GOOD
+            elif float(offer["latestPrice"]) == float(offer["lowestPrice"]):
+                latest_price_cell = latest_price_cell.replace("<td>", f"<td class=\"{good_value_class}\">")
+                lowest_price_cell = lowest_price_cell.replace("<td>", f"<td class=\"{good_value_class}\">")
+            # Latest price is the highest one -> BAD
+            elif float(offer["latestPrice"]) == float(offer["highestPrice"]):
+                latest_price_cell = latest_price_cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
+                highest_price_cell = highest_price_cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
+        except ValueError:
+            pass
+    return lowest_price_cell + latest_price_cell + highest_price_cell
 
 
 def _get_short_url(url):

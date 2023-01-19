@@ -69,6 +69,7 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
     logging.info("...and availability: " + str(is_available))
     for offer in json_dict["offers"]:
         if offer["url"] == url:
+            # Updating latestPrice
             logging.info("Previous latestPrice: " + str(offer["latestPrice"]))
             logging.info("Previous latestPriceDate: " + str(offer["latestPriceDate"]))
             logging.info("Previous isAvailable: " + str(offer["isAvailable"]))
@@ -77,20 +78,31 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
             offer["isAvailable"] = is_available
             if new_price:
                 # Updating lowestPrice
-                if not offer["lowestPrice"] or offer["lowestPrice"] >= new_price:
+                if not offer["lowestPrice"] or offer["lowestPrice"] > new_price:
                     logging.info("Looks like this is the lowest price!")
                     logging.info("Previous lowestPrice: " + str(offer["lowestPrice"]))
                     logging.info("Previous lowestPriceDate: " + str(offer["lowestPriceDate"]))
                     offer["lowestPrice"] = new_price
                     offer["lowestPriceDate"] = ts
+                # Updating highestPrice
+                if not offer["highestPrice"] or offer["highestPrice"] < new_price:
+                    logging.info("Looks like this is the highest price!")
+                    logging.info("Previous highestPrice: " + str(offer["highestPrice"]))
+                    logging.info("Previous highestPriceDate: " + str(offer["highestPriceDate"]))
+                    offer["highestPrice"] = new_price
+                    offer["highestPriceDate"] = ts
             save_json_to_file(json_dict, file_path)
 
 
 def update_prices(urls_with_files, urls_with_prices_and_availability):
     for url in urls_with_prices_and_availability:
-        new_price = urls_with_prices_and_availability[url][0]
-        is_avilable = urls_with_prices_and_availability[url][1]
-        update_the_price_and_availability(urls_with_files[url], url, new_price, is_avilable)
+        try:
+            new_price = urls_with_prices_and_availability[url][0]
+            is_avilable = urls_with_prices_and_availability[url][1]
+            update_the_price_and_availability(urls_with_files[url], url, new_price, is_avilable)
+        except Exception as e:
+            logging.error(f"Exception occurred while updating prices:\n{str(e)}")
+            continue
 
 
 def _make_a_backup(file_path):
