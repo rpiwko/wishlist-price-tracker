@@ -16,6 +16,19 @@
                 background-color: lightsalmon;
             }
         </style>
+        <script>
+            function showCategory(category) {
+                all_records = document.getElementById("wishlistItemsTable").rows;
+                for (i = 1; i < all_records.length; i++) {
+                    record = all_records[i]
+                    if (record.className == category || category == "all") {
+                        record.style.display = "table-row"
+                    } else {
+                        record.style.display = "none"
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
         <header id="main-header">
@@ -26,6 +39,7 @@
 
         <section class="container-content">
 
+        {{CATEGORIES_SELECTOR}}
         {{WISHLIST_ITEMS_TABLE}}
 
         </section>
