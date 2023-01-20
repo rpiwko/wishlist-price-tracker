@@ -51,6 +51,11 @@ results = shop_watcher.get_the_price("https://woblink.com/ebook/zly-tyrmand-mari
 print("woblink.com - available item w/o promo: " + str(results))
 results = shop_watcher.get_the_price("https://woblink.com/ksiazka/sienkiewicz-polityczny-sienkiewicz-ideologiczny--56343")
 print("woblink.com - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://fortgier.pl/p/16/26671/-uszkodzona-nato-the-cold-war-goes-hot-designer-signature-edition-czasy-wspolczesne-wojenne-i-historyczne-gry.html")
+print("woblink.com - available item w promo: " + str(results))
+results = shop_watcher.get_the_price("https://fortgier.pl/p/83/24909/b-17-flying-fortress-leader-2nd-edition-solitaire-gry.html")
+print("woblink.com - available item w/o pro: " + str(results))
+
 
 print("")
 print("##### Test get_prices()")
