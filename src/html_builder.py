@@ -15,11 +15,13 @@ def build_table_from_objects(objects_list):
 
     # Build header
     html_table += "<tr><th>Title</th>"
+    html_table += "<th>Author</th>"
     html_table += "<th>URL</th>"
     html_table += "<th>Available</th>"
     html_table += "<th>Lowest Price</th>"
     html_table += "<th>Latest Price</th>"
     html_table += "<th>Highest Price</th>"
+    html_table += "<th>Comment</th>"
     html_table += "</tr>\n"
 
     # Add items
@@ -27,8 +29,10 @@ def build_table_from_objects(objects_list):
         offers_no = len(item["offers"])
         if offers_no == 1:
             html_table += f"<tr><td>{item['title']}</td>"
+            html_table += f"<td>{item['author']}</td>"
         else:
             html_table += f"<tr><td rowspan={offers_no}>{item['title']}</td>"
+            html_table += f"<td rowspan={offers_no}>{item['author']}</td>"
 
         for n in range(offers_no):
             if n > 0:
@@ -38,6 +42,8 @@ def build_table_from_objects(objects_list):
             html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
             html_table += get_is_available_cell(offer)
             html_table += get_cells_with_prices(offer)
+            if n == 0:
+                html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
             html_table += "</tr>\n"
 
     html_table += "</table>"
