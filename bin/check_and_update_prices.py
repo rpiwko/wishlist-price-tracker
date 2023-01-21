@@ -1,5 +1,5 @@
 """
-Main script to download latest prices
+Main script to download the latest prices
 """
 
 
@@ -20,7 +20,6 @@ initialize_logging(log_files_dir, __file__)
 logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
-
 
 print("##### Test get_the_price()")
 results = shop_watcher.get_the_price("https://www.nexto.pl/ebooki/hobbit,_czyli_tam_i_z_powrotem_p1249864.xml")
@@ -52,10 +51,13 @@ print("woblink.com - available item w/o promo: " + str(results))
 results = shop_watcher.get_the_price("https://woblink.com/ksiazka/sienkiewicz-polityczny-sienkiewicz-ideologiczny--56343")
 print("woblink.com - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://fortgier.pl/p/16/26671/-uszkodzona-nato-the-cold-war-goes-hot-designer-signature-edition-czasy-wspolczesne-wojenne-i-historyczne-gry.html")
-print("woblink.com - available item w promo: " + str(results))
+print("fortgier.pl - available item w promo: " + str(results))
 results = shop_watcher.get_the_price("https://fortgier.pl/p/83/24909/b-17-flying-fortress-leader-2nd-edition-solitaire-gry.html")
-print("woblink.com - available item w/o pro: " + str(results))
-
+print("fortgier.pl - available item w/o pro: " + str(results))
+results = shop_watcher.get_the_price("https://bonito.pl/produkt/nocny-obserwator")
+print("bonito.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://bonito.pl/produkt/uratowane-z-potopu--dvd-2")
+print("bonito.pl - not available item: " + str(results))
 
 print("")
 print("##### Test get_prices()")
