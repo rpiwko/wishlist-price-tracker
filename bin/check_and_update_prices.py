@@ -58,6 +58,10 @@ results = shop_watcher.get_the_price("https://bonito.pl/produkt/nocny-obserwator
 print("bonito.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://bonito.pl/produkt/uratowane-z-potopu--dvd-2")
 print("bonito.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.taniaksiazka.pl/zgroza-w-dunwich-i-inne-przerazajace-opowiesci-howard-phillips-lovecraft-p-1739149.html")
+print("taniaksiazka.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.taniaksiazka.pl/the-thing-on-the-doorstep-and-other-weird-stories-howard-phillips-lovecraft-p-1763985.html")
+print("taniaksiazka.pl - not available item: " + str(results))
 
 print("")
 print("##### Test get_prices()")
