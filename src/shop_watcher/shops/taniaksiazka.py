@@ -35,7 +35,7 @@ class taniaksiazka(base_dynamic_page_shop):
     def _is_available(self, html):
         availability_info = html.find(id="tmp-unavaialb")
         if availability_info:
-            assert availability_info.text == "Chwilowo niedostępny", \
+            assert availability_info.text in ["Chwilowo niedostępny", "Produkt niedostępny"],\
                 f"Unexpected availability info found: {availability_info.text}"
             return False
         else:
