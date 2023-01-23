@@ -68,6 +68,10 @@ results = shop_watcher.get_the_price("https://vesper.pl/literatura/970-ulice-lar
 print("vesper.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://vesper.pl/zapowiedzi/1170-piaty-kier-dan-simmons-oprawa-twarda-9788377314364")
 print("vesper.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.gildia.pl/komiksy/225003-straznicy")
+print("gildia.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.gildia.pl/komiksy/251627-v-jak-vendetta")
+print("gildia.pl - not available item: " + str(results))
 
 print("")
 print("##### Test get_prices()")
