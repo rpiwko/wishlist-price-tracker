@@ -23,7 +23,9 @@ def read_json_from_file(file_path):
 def read_jsons_from_files(dir_path):
     items = []
     for json_file in sorted(Path(dir_path).glob("**/*.json")):
-        items.append(read_json_from_file(json_file))
+        item = read_json_from_file(json_file)
+        item["jsonFile"] = json_file
+        items.append(item)
     return items
 
 
@@ -79,14 +81,14 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
             if new_price:
                 # Updating lowestPrice
                 if not offer["lowestPrice"] or offer["lowestPrice"] > new_price:
-                    logging.info("Looks like this is the lowest price!")
+                    logging.info("Looks like this is the new lowest price")
                     logging.info("Previous lowestPrice: " + str(offer["lowestPrice"]))
                     logging.info("Previous lowestPriceDate: " + str(offer["lowestPriceDate"]))
                     offer["lowestPrice"] = new_price
                     offer["lowestPriceDate"] = ts
                 # Updating highestPrice
                 if not offer["highestPrice"] or offer["highestPrice"] < new_price:
-                    logging.info("Looks like this is the highest price!")
+                    logging.info("Looks like this is the new highest price")
                     logging.info("Previous highestPrice: " + str(offer["highestPrice"]))
                     logging.info("Previous highestPriceDate: " + str(offer["highestPriceDate"]))
                     offer["highestPrice"] = new_price

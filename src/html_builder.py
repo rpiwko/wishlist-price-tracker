@@ -31,11 +31,11 @@ def build_wishlist_items_table(objects_list):
         offers_no = len(item["offers"])
         if offers_no == 1:
             html_table += f"<tr><td>{item['category']}</td>"
-            html_table += f"<td>{item['title']}</td>"
+            html_table += f"<td><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td>{item['author']}</td>"
         else:
             html_table += f"<tr><td rowspan={offers_no}>{item['category']}</td>"
-            html_table += f"<td rowspan={offers_no}>{item['title']}</td>"
+            html_table += f"<td rowspan={offers_no}><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td rowspan={offers_no}>{item['author']}</td>"
 
         for n in range(offers_no):
@@ -93,6 +93,7 @@ def get_is_available_cell(offer):
     else:
         cell = f"<td class=\"{bad_value_class}\">No</td>"
     return cell
+
 
 def get_cells_with_prices(offer):
     lowest_price_cell = f"<td>{offer['lowestPrice']}</td>"
