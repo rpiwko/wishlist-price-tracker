@@ -71,13 +71,24 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
     logging.info("...and availability: " + str(is_available))
     for offer in json_dict["offers"]:
         if offer["url"] == url:
+            # Updating isAvailable
+            logging.info("Previous isAvailable: " + str(offer["isAvailable"]))
+            if offer["isAvailable"] != is_available:
+                offer["isAvailable"] = is_available
+                offer["isAvailableDate"] = ts
+            if not offer["isAvailableDate"]:
+                offer["isAvailableDate"] = ts
             # Updating latestPrice
             logging.info("Previous latestPrice: " + str(offer["latestPrice"]))
             logging.info("Previous latestPriceDate: " + str(offer["latestPriceDate"]))
-            logging.info("Previous isAvailable: " + str(offer["isAvailable"]))
+            if not new_price and not offer["latestPrice"] and not offer["lowestPrice"] and not offer["highestPrice"]:
+                logging.info("Looks like this offer was never checked before or was never available")
+                logging.info("Unifying empty prices to empty strings")
+                new_price = ""
+                offer["lowestPrice"] = ""
+                offer["highestPrice"] = ""
             offer["latestPrice"] = new_price
             offer["latestPriceDate"] = ts
-            offer["isAvailable"] = is_available
             if new_price:
                 # Updating lowestPrice
                 if not offer["lowestPrice"] or offer["lowestPrice"] > new_price:
