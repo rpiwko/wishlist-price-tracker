@@ -6,7 +6,6 @@ HTML downloader for static pages
 import logging
 from requests import get, RequestException
 from bs4 import BeautifulSoup
-from contextlib import closing
 import time
 import random
 

@@ -19,7 +19,7 @@ class fortgier(base_dynamic_page_shop):
 
     def _get_price_and_availability_from_html(self, html):
         price_string = None
-        is_availabe = None
+        is_available = None
         if html:
             is_available = self._is_available(html)
             logging.info("is_available=" + str(is_available))

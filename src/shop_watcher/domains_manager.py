@@ -39,7 +39,7 @@ def validate_domain(domain):
     Checks whether domain is supported
 
     Args:
-        url (str): Domain to validate. Use string_tools.get_domain_from_url(url) in order to extract domain from URL
+        domain (str): Domain to validate. Use string_tools.get_domain_from_url(url) in order to extract domain from URL
     """
     if domain not in domains_vs_modules.keys():
         error_text = f"Unexpected URL domain detected: '{domain}'. Accepted domains are: {list(domains_vs_modules.keys())}"

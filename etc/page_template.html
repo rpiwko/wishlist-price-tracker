@@ -21,7 +21,7 @@
                 all_records = document.getElementById("wishlistItemsTable").rows;
                 for (i = 1; i < all_records.length; i++) {
                     record = all_records[i]
-                    if (record.className == category || category == "all") {
+                    if (record.classList.contains(category) || category == "all") {
                         record.style.display = "table-row"
                     } else {
                         record.style.display = "none"
@@ -33,7 +33,7 @@
     <body>
         <header id="main-header">
             <div class="container-header">
-                <h1>My Wishlist</h1>
+                <h1 style="text-align:center">My Wishlist</h1>
             </div>
         </header>
 

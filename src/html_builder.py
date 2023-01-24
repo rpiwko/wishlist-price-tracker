@@ -14,7 +14,7 @@ def build_wishlist_items_table(objects_list):
     html_table = "<table id=\"wishlistItemsTable\">\n"
     html_table += "<h3>Wishlist items</h3>\n"
 
-    # Build header
+    # Build the header
     html_table += "<tr><th>Category</th>"
     html_table += "<th>Title</th>"
     html_table += "<th>Author</th>"
@@ -44,8 +44,8 @@ def build_wishlist_items_table(objects_list):
             offer = item["offers"][n]
             url = offer['url']
             html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
-            html_table += get_is_available_cell(offer)
-            html_table += get_cells_with_prices(offer)
+            html_table += _get_is_available_cell(offer)
+            html_table += _get_cells_with_prices(offer)
             if n == 0:
                 html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
             html_table += "</tr>\n"
@@ -86,8 +86,7 @@ def put_element_into_template(element, input_file_path, element_marker, output_f
         output_file.write(html_page)
 
 
-def get_is_available_cell(offer):
-    cell = ""
+def _get_is_available_cell(offer):
     if offer['isAvailable']:
         cell = f"<td class=\"{good_value_class}\">Yes</td>"
     else:
@@ -95,7 +94,7 @@ def get_is_available_cell(offer):
     return cell
 
 
-def get_cells_with_prices(offer):
+def _get_cells_with_prices(offer):
     lowest_price_cell = f"<td>{offer['lowestPrice']}</td>"
     latest_price_cell = f"<td>{offer['latestPrice']}</td>"
     highest_price_cell = f"<td>{offer['highestPrice']}</td>"
