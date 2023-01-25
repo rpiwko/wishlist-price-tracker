@@ -32,6 +32,7 @@ class bonito(base_static_page_shop):
         availability_info_when_out_of_stock = html.find("div", attrs={"itemprop": "availability"})
         if availability_info_when_in_stock and availability_info_when_in_stock.get("content") != "OutOfStock":
             return True
-        if availability_info_when_out_of_stock and availability_info_when_out_of_stock.get("content") == "OutOfStock":
+        if availability_info_when_out_of_stock and availability_info_when_out_of_stock.get("content") \
+                in ["OutOfStock", "PreOrder"]:
             return False
         raise ValueError("Unable to determine item availability")
