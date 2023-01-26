@@ -12,20 +12,24 @@ import shop_watcher
 domains_manager.import_shop_modules()
 
 
-def get_prices(url_list):
+def get_prices(url_list, show_progress_bar=False):
     """
     Get the price from multiple URLs
 
     Args:
         url_list: list of URLs to get the prices from
+        show_progress_bar: when True, then progress bar will be printed to output
 
     Returns:
-        Dictonary with URLs, prices as valid float numbers and availability flags:
+        Dictionary with URLs, prices as valid float numbers and availability flags:
         {"url1": [12.34, True], "url2": [56.78, True], "url3": [None, False], "url4": [99.99, False]...}
         If price could not be extracted from URL, then appropriate error is logged and price is set to None
     """
     grouped_urls = _group_urls_by_domain(url_list)
     urls_with_prices = {}
+    processed_urls_cnt = 0
+    if show_progress_bar:
+        _print_progress_bar(processed_urls_cnt, len(url_list))
     for domain in grouped_urls:
         logging.info(f"Getting prices for {domain} started")
         shop_module = domains_manager.get_shop_module_for_domain(domain)
@@ -43,6 +47,15 @@ def get_prices(url_list):
             else:
                 urls_with_prices[url] = None, None
         logging.info(f"Getting prices for {domain} completed!")
+        processed_urls_cnt += len(grouped_urls[domain])
+        if show_progress_bar:
+            _print_progress_bar(processed_urls_cnt, len(url_list))
+        elif processed_urls_cnt > 0:
+            print(f"Total progress: {processed_urls_cnt}/{len(url_list)}")
+    if processed_urls_cnt != len(url_list):
+        print()
+        print(f"Number of skipped URLs: {len(url_list) - processed_urls_cnt}. Check logs for more details")
+        logging.info(f"Number of skipped URLs: {len(url_list) - processed_urls_cnt}. Check logs for more details")
     return urls_with_prices
 
 
@@ -55,7 +68,7 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
         url_list: list of URLs to get the prices from, passed to get_prices()
     
     Returns:
-        Dictonary with URLs, raw price texts and availability flags:
+        Dictionary with URLs, raw price texts and availability flags:
         {"url1": ["raw_price_text1", True], "url2": ["raw_price_text2", True], "url3": ["raw_price_text3", False]...}
     """
     namespace_for_exec = dict()
@@ -66,7 +79,7 @@ def _execute_get_prices_from_shop_module(shop_module, url_list):
 
 def _group_urls_by_domain(url_list):
     """
-    Groups URLs by domain
+    Groups URLs by domain. URLs belonging to not supported domains will be skipped from results
 
     Args:
         url_list: list of URLs to group
@@ -87,3 +100,14 @@ def _group_urls_by_domain(url_list):
         except ValueError as e:
             logging.error("Skipping URL: " + url)
     return grouped_urls
+
+
+def _print_progress_bar (iteration, total):
+    length = 50
+    percent = "{0:.1f}".format(100 * (iteration / float(total)))
+    filled_length = int(length * iteration // total)
+    bar = "█" * filled_length + "-" * (length - filled_length)
+    print("\rProgress: |%s| %s%% Complete" % (bar, percent), end = "\r")
+    # Print New Line on Complete
+    if iteration == total:
+        print()
