@@ -81,9 +81,13 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
             # Updating latestPrice
             logging.info("Previous latestPrice: " + str(offer["latestPrice"]))
             logging.info("Previous latestPriceDate: " + str(offer["latestPriceDate"]))
+            if not is_available and not new_price:
+                logging.info("Offer is not available and new price was not found")
+                logging.info("Resetting new price to empty string...")
+                new_price = ""
             if not new_price and not offer["latestPrice"] and not offer["lowestPrice"] and not offer["highestPrice"]:
                 logging.info("Looks like this offer was never checked before or was never available")
-                logging.info("Unifying empty prices to empty strings")
+                logging.info("Resetting prices to empty strings...")
                 new_price = ""
                 offer["lowestPrice"] = ""
                 offer["highestPrice"] = ""
@@ -111,8 +115,8 @@ def update_prices(urls_with_files, urls_with_prices_and_availability):
     for url in urls_with_prices_and_availability:
         try:
             new_price = urls_with_prices_and_availability[url][0]
-            is_avilable = urls_with_prices_and_availability[url][1]
-            update_the_price_and_availability(urls_with_files[url], url, new_price, is_avilable)
+            is_available = urls_with_prices_and_availability[url][1]
+            update_the_price_and_availability(urls_with_files[url], url, new_price, is_available)
         except Exception as e:
             logging.error(f"Exception occurred while updating prices:\n{str(e)}")
             continue
