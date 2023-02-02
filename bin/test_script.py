@@ -78,5 +78,9 @@ results = shop_watcher.get_the_price("https://komiksiarnia.pl/sandman/15190-smie
 print("komiksiarnia.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://komiksiarnia.pl/aliens-vs-predator/10055-aliens-vs-predator-30th-anniversary-edition-9788366291515.html")
 print("komiksiarnia.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Thunderbolt-Apache-Leader/2337")
+print("planszostrefa.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Legendary-Encounters-An-Alien-Deck-Building-Game/3675")
+print("planszostrefa.pl - not available item: " + str(results))
 
 print("Script completed!")
