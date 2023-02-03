@@ -28,7 +28,9 @@ def build_wishlist_items_table(objects_list):
 
     # Add items
     for item in objects_list:
+        logging.info("Processing item: " + item['title'])
         offers_no = len(item["offers"])
+        logging.info(f"Offers number: {offers_no}")
         if offers_no == 1:
             html_table += f"<tr><td>{item['category']}</td>"
             html_table += f"<td><a href='{item['jsonFile']}'>{item['title']}</a></td>"
@@ -38,6 +40,9 @@ def build_wishlist_items_table(objects_list):
             html_table += f"<td rowspan={offers_no}><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td rowspan={offers_no}>{item['author']}</td>"
 
+        best_price_for_item, worst_price_for_item = _get_best_and_worst_latest_prices(item)
+        logging.info(f"best_price_for_item={best_price_for_item}")
+        logging.info(f"worst_price_for_item={worst_price_for_item}")
         for n in range(offers_no):
             if n > 0:
                 html_table += "<tr>"
@@ -45,7 +50,7 @@ def build_wishlist_items_table(objects_list):
             url = offer['url']
             html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
             html_table += _get_is_available_cell(offer)
-            html_table += _get_cells_with_prices(offer)
+            html_table += _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item)
             if n == 0:
                 html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
             html_table += "</tr>\n"
@@ -94,24 +99,20 @@ def _get_is_available_cell(offer):
     return cell
 
 
-def _get_cells_with_prices(offer):
+def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
     lowest_price_cell = f"<td>{offer['lowestPrice']}</td>"
     latest_price_cell = f"<td>{offer['latestPrice']}</td>"
     highest_price_cell = f"<td>{offer['highestPrice']}</td>"
     if offer["isAvailable"]:
         try:
-            # All three prices are equal -> no need to add any color
-            if float(offer["lowestPrice"]) == float(offer["highestPrice"]):
-                pass
-            # Latest price is the lowest one -> GOOD
-            elif float(offer["latestPrice"]) == float(offer["lowestPrice"]):
+            if float(offer["latestPrice"]) == best_price_for_item:
+                logging.info(f"The latestPrice={offer['latestPrice']} is today the best one!")
                 latest_price_cell = latest_price_cell.replace("<td>", f"<td class=\"{good_value_class}\">")
-                lowest_price_cell = lowest_price_cell.replace("<td>", f"<td class=\"{good_value_class}\">")
-            # Latest price is the highest one -> BAD
-            elif float(offer["latestPrice"]) == float(offer["highestPrice"]):
+            elif float(offer["latestPrice"]) == worst_price_for_item:
+                logging.info(f"The latestPrice={offer['latestPrice']} is today the worst one!")
                 latest_price_cell = latest_price_cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
-                highest_price_cell = highest_price_cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
-        except ValueError:
+        except ValueError as e:
+            logging.error(f"Error while preparing price cells for offer {offer['url']}:\n{e}")
             pass
     return lowest_price_cell + latest_price_cell + highest_price_cell
 
@@ -120,6 +121,18 @@ def _get_short_url(url):
     short_url = url.removeprefix("https://").removeprefix("www.")
     short_url = short_url[:short_url.find("/")]
     return short_url
+
+
+def _get_best_and_worst_latest_prices(item):
+    best_price_for_item = None
+    worst_price_for_item = None
+    for offer in item["offers"]:
+        if offer["latestPrice"] and offer["isAvailable"]:
+            if best_price_for_item is None or best_price_for_item > float(offer["latestPrice"]):
+                best_price_for_item = float(offer["latestPrice"])
+            if worst_price_for_item is None or worst_price_for_item < float(offer["latestPrice"]):
+                worst_price_for_item = float(offer["latestPrice"])
+    return best_price_for_item, worst_price_for_item
 
 
 def _get_categories(objects_list):
