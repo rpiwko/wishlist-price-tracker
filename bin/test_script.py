@@ -82,5 +82,7 @@ results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Thunderbolt-
 print("planszostrefa.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Legendary-Encounters-An-Alien-Deck-Building-Game/3675")
 print("planszostrefa.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.swiatksiazki.pl/emma-6749841-e-book.html")
+print("swiatksiazki.pl - available item: " + str(results))
 
 print("Script completed!")
