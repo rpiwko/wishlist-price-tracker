@@ -31,7 +31,7 @@ def build_wishlist_items_table(objects_list):
         logging.info("Processing item: " + item['title'])
         offers_no = len(item["offers"])
         logging.info(f"Offers number: {offers_no}")
-        if offers_no == 1:
+        if offers_no <= 1:
             html_table += f"<tr><td>{item['category']}</td>"
             html_table += f"<td><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td>{item['author']}</td>"
@@ -43,6 +43,15 @@ def build_wishlist_items_table(objects_list):
         best_price_for_item, worst_price_for_item = _get_best_and_worst_latest_prices(item)
         logging.info(f"best_price_for_item={best_price_for_item}")
         logging.info(f"worst_price_for_item={worst_price_for_item}")
+
+        if offers_no == 0:
+            html_table += "<td> n/a </td>"
+            html_table += f"<td class=\"{bad_value_class}\">No</td>"
+            html_table += "<td> n/a </td>"
+            html_table += "<td> n/a </td>"
+            html_table += "<td> n/a </td>"
+            html_table += "<td></td>"
+            html_table += "</tr>\n"
         for n in range(offers_no):
             if n > 0:
                 html_table += "<tr>"
