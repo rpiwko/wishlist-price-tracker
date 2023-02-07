@@ -84,5 +84,9 @@ results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Legendary-En
 print("planszostrefa.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.swiatksiazki.pl/emma-6749841-e-book.html")
 print("swiatksiazki.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://strefamarzen.pl/pl/products/d-d-ghost-of-saltmarsh-board-game-dodatek-13907")
+print("strefamarzen.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://strefamarzen.pl/pl/products/the-thing-gra-planszowa-edycja-polska-14487")
+print("strefamarzen.pl - not available item: " + str(results))
 
 print("Script completed!")
