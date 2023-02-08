@@ -88,5 +88,9 @@ results = shop_watcher.get_the_price("https://strefamarzen.pl/pl/products/d-d-gh
 print("strefamarzen.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://strefamarzen.pl/pl/products/the-thing-gra-planszowa-edycja-polska-14487")
 print("strefamarzen.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://aleplanszowki.pl/przygodowe/9358-waste-knights-druga-edycja--5902259206446.html")
+print("aleplanszowki.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://aleplanszowki.pl/przygodowe/11129-the-thing-gra-planszowa-5902259206361.html")
+print("aleplanszowki.pl - not available item: " + str(results))
 
 print("Script completed!")
