@@ -92,5 +92,10 @@ results = shop_watcher.get_the_price("https://aleplanszowki.pl/przygodowe/9358-w
 print("aleplanszowki.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://aleplanszowki.pl/przygodowe/11129-the-thing-gra-planszowa-5902259206361.html")
 print("aleplanszowki.pl - not available item: " + str(results))
-
+results = shop_watcher.get_the_price("https://www.dvdmax.pl/my-dying-bride-the-ghost-of-orion-cd,art1058972")
+print("dvdmax.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://www.dvdmax.pl/my-dying-bride-for-darkest-eyes-black-2xwinyl,art1766664")
+print("dvdmax.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://www.dvdmax.pl/my-dying-bride-the-manuscript-winyl,art311569")
+print("dvdmax.pl - not available item: " + str(results))
 print("Script completed!")
