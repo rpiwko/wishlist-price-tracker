@@ -98,4 +98,9 @@ results = shop_watcher.get_the_price("https://www.dvdmax.pl/my-dying-bride-for-d
 print("dvdmax.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://www.dvdmax.pl/my-dying-bride-the-manuscript-winyl,art311569")
 print("dvdmax.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://dragoneye.pl/diuna-imperium-p-2925.html")
+print("dragoneye.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://dragoneye.pl/legendary-encounters-an-alien-deck-building-game-eng-p-2151.html")
+print("dragoneye.pl - not available item: " + str(results))
+
 print("Script completed!")
