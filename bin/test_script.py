@@ -102,5 +102,9 @@ results = shop_watcher.get_the_price("https://dragoneye.pl/diuna-imperium-p-2925
 print("dragoneye.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://dragoneye.pl/legendary-encounters-an-alien-deck-building-game-eng-p-2151.html")
 print("dragoneye.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://mepel.pl/deep-madness-edycja-polska")
+print("mepel.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://mepel.pl/aliens-bug-hunt")
+print("mepel.pl - not available item: " + str(results))
 
 print("Script completed!")
