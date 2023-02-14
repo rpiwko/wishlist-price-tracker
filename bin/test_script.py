@@ -22,6 +22,8 @@ results = shop_watcher.get_the_price("https://www.nexto.pl/ebooki/zbyt_wielcy_by
 print("nexto.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.planszomania.pl/karciane/4983/Marvel-Legendary:-Deck-Building-Game.html")
 print("planszomania.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.planszomania.pl/przygodowe/22609/Deep-Madness-edycja-polska.html")
+print("planszomania.pl - not available item w promo: " + str(results))
 results = shop_watcher.get_the_price("https://www.planszomania.pl/strategiczne/25596/Black-Rose-Wars-edycja-podstawowa.html")
 print("planszomania.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://virtualo.pl/ebook/hobbit-czyli-tam-i-z-powrotem-i360890/")
