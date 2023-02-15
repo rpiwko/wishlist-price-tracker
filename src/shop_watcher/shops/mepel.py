@@ -17,10 +17,12 @@ class mepel(base_static_page_shop):
         price_string = None
         is_available = None
         if html:
-            is_available = self._is_available(html)
+            offer_panel = html.find_all("div", class_="bottomborder")
+            assert len(offer_panel) == 1, f"Expected one offer details panel but getting {len(offer_panel)}"
+            is_available = self._is_available(offer_panel[0])
             logging.info("is_available=" + str(is_available))
             # Price is still shown even when item is not available
-            price_tag = html.find_all("em", class_="main-price")
+            price_tag = offer_panel[0].find_all("em", class_="main-price")
             assert len(price_tag) == 1, f"Expected one price tag but getting {len(price_tag)}"
             price_string = price_tag[0].text
             logging.info("price_string=" + price_string)
