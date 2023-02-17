@@ -15,7 +15,7 @@ def build_wishlist_items_table(objects_list):
     html_table += "<h3>Wishlist items</h3>\n"
 
     # Build the header
-    html_table += "<tr><th>Category</th>"
+    html_table += "<thead><tr><th>Category</th>"
     html_table += "<th>Title</th>"
     html_table += "<th>Author</th>"
     html_table += "<th>URL</th>"
@@ -24,7 +24,7 @@ def build_wishlist_items_table(objects_list):
     html_table += "<th>Latest Price</th>"
     html_table += "<th>Highest Price</th>"
     html_table += "<th>Comment</th>"
-    html_table += "</tr>\n"
+    html_table += "</tr></thead>\n"
 
     # Add items
     for item in objects_list:
@@ -32,11 +32,11 @@ def build_wishlist_items_table(objects_list):
         offers_no = len(item["offers"])
         logging.info(f"Offers number: {offers_no}")
         if offers_no <= 1:
-            html_table += f"<tr><td>{item['category']}</td>"
+            html_table += f"<tbody><tr><td>{item['category']}</td>"
             html_table += f"<td><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td>{item['author']}</td>"
         else:
-            html_table += f"<tr><td rowspan={offers_no}>{item['category']}</td>"
+            html_table += f"<tbody><tr><td rowspan={offers_no}>{item['category']}</td>"
             html_table += f"<td rowspan={offers_no}><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td rowspan={offers_no}>{item['author']}</td>"
 
@@ -51,20 +51,22 @@ def build_wishlist_items_table(objects_list):
             html_table += "<td> n/a </td>"
             html_table += "<td> n/a </td>"
             html_table += "<td></td>"
-            html_table += "</tr>\n"
-        for n in range(offers_no):
-            if n > 0:
-                html_table += "<tr>"
-            offer = item["offers"][n]
-            url = offer['url']
-            html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
-            html_table += _get_is_available_cell(offer)
-            html_table += _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item)
-            if n == 0:
-                html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
-            html_table += "</tr>\n"
+            html_table += "</tr></tbody>\n"
+        else:
+            for n in range(offers_no):
+                if n > 0:
+                    html_table += "<tr>"
+                offer = item["offers"][n]
+                url = offer['url']
+                html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
+                html_table += _get_is_available_cell(offer)
+                html_table += _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item)
+                if n == 0:
+                    html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
+                html_table += "</tr>"
+            html_table += "</tbody>\n"
 
-        html_table = html_table.replace("<tr>", f"<tr class=\"{_format_category_name(item['category'])}\">")
+        html_table = html_table.replace("<tbody>", f"<tbody class=\"{_format_category_name(item['category'])}\">")
 
     html_table += "</table>"
     logging.info("html_table=\n" + html_table)

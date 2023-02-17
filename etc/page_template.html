@@ -9,6 +9,9 @@
                 padding: 2px 10px;
                 margin: 2px;
             }
+            tbody:hover {
+                background-color: aliceblue;
+            }
             td.good-value {
                 background-color: aquamarine;
             }
@@ -18,11 +21,11 @@
         </style>
         <script>
             function showCategory(category) {
-                all_records = document.getElementById("wishlistItemsTable").rows;
+                all_records = document.getElementById("wishlistItemsTable").children;
                 for (i = 1; i < all_records.length; i++) {
                     record = all_records[i]
                     if (record.classList.contains(category) || category == "all") {
-                        record.style.display = "table-row"
+                        record.style.display = "table-row-group"
                     } else {
                         record.style.display = "none"
                     }
