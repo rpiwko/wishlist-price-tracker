@@ -1,6 +1,6 @@
 {
     "title": "",
-    "category": "eBooks",
+    "category": "Board games",
     "author": "",
     "language": "",
     "publisher": "",
@@ -10,7 +10,7 @@
     "comment": "",
     "offers": [
         {
-            "url": "https://virtualo.pl...",
+            "url": "https://www.planszomania.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -21,7 +21,7 @@
             "highestPriceDate": ""
         },
         {
-            "url": "https://www.nexto.pl...",
+            "url": "https://strefamarzen.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -32,7 +32,7 @@
             "highestPriceDate": ""
         },
         {
-            "url": "https://www.publio.pl...",
+            "url": "https://dragoneye.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -43,7 +43,7 @@
             "highestPriceDate": ""
         },
         {
-            "url": "https://ebookpoint.pl...",
+            "url": "https://mepel.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -54,7 +54,7 @@
             "highestPriceDate": ""
         },
         {
-            "url": "https://woblink.com...",
+            "url": "https://planszostrefa.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -65,7 +65,29 @@
             "highestPriceDate": ""
         },
         {
-            "url": "https://www.swiatksiazki.pl...",
+            "url": "https://aleplanszowki.pl...",
+            "isAvailable": true,
+            "isAvailableDate": "",
+            "lowestPrice": "",
+            "lowestPriceDate": "",
+            "latestPrice": "",
+            "latestPriceDate": "",
+            "highestPrice": "",
+            "highestPriceDate": ""
+        },
+        {
+            "url": "https://fortgier.pl...",
+            "isAvailable": true,
+            "isAvailableDate": "",
+            "lowestPrice": "",
+            "lowestPriceDate": "",
+            "latestPrice": "",
+            "latestPriceDate": "",
+            "highestPrice": "",
+            "highestPriceDate": ""
+        },
+        {
+            "url": "https://bonito.pl...",
             "isAvailable": true,
             "isAvailableDate": "",
             "lowestPrice": "",
@@ -78,7 +100,7 @@
     ],
     "references": [
         {
-            "url": "https://lubimyczytac.pl...",
+            "url": "https://boardgamegeek.com...",
             "rating": ".../10",
             "excerpt": ""
         }
