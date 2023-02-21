@@ -1,7 +1,16 @@
+.idea/*
 env/*
 logs/*
 *.log
 *.bak
+*.BAK
 __pycache__
 */__pycache__
 */*/__pycache__
+etc_old/*
+etc/board_games/*
+etc/books/*
+etc/comic_books/*
+etc/ebooks/*
+etc/movies/*
+etc/music/*
