@@ -8,6 +8,7 @@ import logging
 
 good_value_class = "good-value"
 bad_value_class = "bad-value"
+empty_value = "-"
 
 
 def build_wishlist_items_table(objects_list):
@@ -45,11 +46,11 @@ def build_wishlist_items_table(objects_list):
         logging.info(f"worst_price_for_item={worst_price_for_item}")
 
         if offers_no == 0:
-            html_table += "<td> n/a </td>"
+            html_table += f"<td>{empty_value}</td>"
             html_table += f"<td class=\"{bad_value_class}\">No</td>"
-            html_table += "<td> n/a </td>"
-            html_table += "<td> n/a </td>"
-            html_table += "<td> n/a </td>"
+            html_table += f"<td>{empty_value}</td>"
+            html_table += f"<td>{empty_value}</td>"
+            html_table += f"<td>{empty_value}</td>"
             html_table += "<td></td>"
             html_table += "</tr></tbody>\n"
         else:
@@ -111,9 +112,18 @@ def _get_is_available_cell(offer):
 
 
 def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
-    lowest_price_cell = f"<td>{offer['lowestPrice']}</td>"
-    latest_price_cell = f"<td>{offer['latestPrice']}</td>"
-    highest_price_cell = f"<td>{offer['highestPrice']}</td>"
+    if offer['lowestPrice']:
+        lowest_price_cell = f"<td>{float(offer['lowestPrice']):.2f}</td>"
+    else:
+        lowest_price_cell = f"<td>{empty_value}</td>"
+    if offer['latestPrice']:
+        latest_price_cell = f"<td>{float(offer['latestPrice']):.2f}</td>"
+    else:
+        latest_price_cell = f"<td>{empty_value}</td>"
+    if offer['highestPrice']:
+        highest_price_cell = f"<td>{float(offer['highestPrice']):.2f}</td>"
+    else:
+        highest_price_cell = f"<td>{empty_value}</td>"
     if offer["isAvailable"]:
         try:
             if float(offer["latestPrice"]) == best_price_for_item:

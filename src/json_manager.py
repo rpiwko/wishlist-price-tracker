@@ -83,30 +83,38 @@ def update_the_price_and_availability(file_path, url, new_price, is_available):
             logging.info("Previous latestPriceDate: " + str(offer["latestPriceDate"]))
             if not is_available and not new_price:
                 logging.info("Offer is not available and new price was not found")
-                logging.info("Resetting new price to empty string...")
-                new_price = ""
+                logging.info("Resetting new price to null...")
+                new_price = None
             if not new_price and not offer["latestPrice"] and not offer["lowestPrice"] and not offer["highestPrice"]:
                 logging.info("Looks like this offer was never checked before or was never available")
-                logging.info("Resetting prices to empty strings...")
-                new_price = ""
-                offer["lowestPrice"] = ""
-                offer["highestPrice"] = ""
-            offer["latestPrice"] = new_price
+                logging.info("Resetting prices to nulls...")
+                new_price = None
+                offer["lowestPrice"] = None
+                offer["highestPrice"] = None
+
+            def _update_price(name, value):
+                if value:
+                    offer[name] = float(value)
+                else:
+                    offer[name] = value
+
+            _update_price("latestPrice", new_price)
             offer["latestPriceDate"] = ts
             if new_price:
+                new_price = float(new_price)
                 # Updating lowestPrice
-                if not offer["lowestPrice"] or offer["lowestPrice"] > new_price:
+                if not offer["lowestPrice"] or float(offer["lowestPrice"]) > new_price:
                     logging.info("Looks like this is the new lowest price")
                     logging.info("Previous lowestPrice: " + str(offer["lowestPrice"]))
                     logging.info("Previous lowestPriceDate: " + str(offer["lowestPriceDate"]))
-                    offer["lowestPrice"] = new_price
+                    _update_price("lowestPrice", new_price)
                     offer["lowestPriceDate"] = ts
                 # Updating highestPrice
-                if not offer["highestPrice"] or offer["highestPrice"] < new_price:
+                if not offer["highestPrice"] or float(offer["highestPrice"]) < new_price:
                     logging.info("Looks like this is the new highest price")
                     logging.info("Previous highestPrice: " + str(offer["highestPrice"]))
                     logging.info("Previous highestPriceDate: " + str(offer["highestPriceDate"]))
-                    offer["highestPrice"] = new_price
+                    _update_price("highestPrice", new_price)
                     offer["highestPriceDate"] = ts
             save_json_to_file(json_dict, file_path)
 
