@@ -25,9 +25,9 @@ class publio(base_dynamic_page_shop):
             logging.info("is_available=" + str(is_available))
             # If not is_available, then price is not shown so skip further checking
             if is_available:
-                price_tag = html.find_all("div", class_="prices")
+                price_tag = html.find_all("div", class_="current-price")
                 assert len(price_tag) == 1, f"Expected one <prices> tag but getting {len(price_tag)}"
-                price_string = price_tag[0].find("div", class_="current").get_text()
+                price_string = price_tag[0].get_text()
         return price_string, is_available
 
 
