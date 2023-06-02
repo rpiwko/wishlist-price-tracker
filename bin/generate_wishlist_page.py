@@ -15,6 +15,7 @@ import html_builder
 print("Script started...")
 
 bin_dir_path = Path(__file__).parent
+etc_dir_path = Path(bin_dir_path.joinpath("../etc")).resolve()
 log_files_dir = bin_dir_path.joinpath("../logs")
 initialize_logging(log_files_dir, __file__)
 
@@ -22,7 +23,6 @@ logging.info("****************************************************************")
 logging.info("*************************** Starting ***************************")
 logging.info("")
 
-etc_dir_path = Path(Path(__file__).parent.joinpath("../etc")).resolve()
 wishlist_items = json_manager.read_jsons_from_files(etc_dir_path)
 logging.info("Found items:\n" + str(wishlist_items))
 html_category_selector = html_builder.build_category_selector(wishlist_items)
