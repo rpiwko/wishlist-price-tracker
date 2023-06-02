@@ -15,7 +15,7 @@ delay_min_sec = 2
 delay_max_sec = 6
 
 
-def get_the_html(url, ignore_response_codes=[]):
+def get_the_html(url, ignore_response_codes=[404]):
     # TODO: Consider removing ignore_response_codes parameter
     """
     Downloads HTML from URL
