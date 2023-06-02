@@ -52,6 +52,17 @@
             "latestPriceDate": "",
             "highestPrice": "",
             "highestPriceDate": ""
+        },
+        {
+            "url": "https://dvdmax.pl...",
+            "isAvailable": true,
+            "isAvailableDate": "",
+            "lowestPrice": "",
+            "lowestPriceDate": "",
+            "latestPrice": "",
+            "latestPriceDate": "",
+            "highestPrice": "",
+            "highestPriceDate": ""
         }
     ],
     "references": [
