@@ -1,6 +1,7 @@
 .idea/*
 env/*
 logs/*
+out/*
 *.log
 *.bak
 *.BAK

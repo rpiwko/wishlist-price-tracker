@@ -14,11 +14,12 @@ import html_builder
 
 print("Script started...")
 
-log_files_dir = Path(__file__).parent.joinpath("../logs").resolve()
-etc_dir_path = Path(Path(__file__).parent.joinpath("../etc")).resolve()
+bin_dir_path = Path(__file__).parent
+etc_dir_path = Path(bin_dir_path.joinpath("../etc")).resolve()
+log_files_dir = bin_dir_path.joinpath("../logs").resolve()
 
-template_file = Path.joinpath(etc_dir_path, "page_template.html")
-output_file = Path.joinpath(Path.home(), "Desktop/my_wishlist.html")
+page_template_file = Path.joinpath(etc_dir_path, "page_template.html")
+page_output_file = Path.joinpath(bin_dir_path.joinpath("../out/my_wishlist.html"))
 
 initialize_logging(log_files_dir, __file__)
 logging.info("****************************************************************")
@@ -46,8 +47,8 @@ logging.info("Found items:\n" + str(wishlist_items))
 html_category_selector = html_builder.build_category_selector(wishlist_items)
 html_wishlist_items_table = html_builder.build_wishlist_items_table(wishlist_items)
 
-html_builder.put_element_into_template(html_category_selector, template_file, "{{CATEGORIES_SELECTOR}}", output_file)
-html_builder.put_element_into_template(html_wishlist_items_table, output_file, "{{WISHLIST_ITEMS_TABLE}}", output_file)
+html_builder.put_element_into_template(html_category_selector, page_template_file, "{{CATEGORIES_SELECTOR}}", page_output_file)
+html_builder.put_element_into_template(html_wishlist_items_table, page_output_file, "{{WISHLIST_ITEMS_TABLE}}", page_output_file)
 
 print("Generating result HTML page complete!")
 logging.info("Generating result HTML page complete!")
