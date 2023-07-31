@@ -108,5 +108,7 @@ results = shop_watcher.get_the_price("https://mepel.pl/diuna-imperium-edycja-pol
 print("mepel.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://mepel.pl/alniens-bug-hunt")
 print("mepel.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://mepel.pl/iss-vanguard-core-pledge-polska-edycja-gamefound")
+print("mepel.pl - preorder: " + str(results))
 
 print("Script completed!")

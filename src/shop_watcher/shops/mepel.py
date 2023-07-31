@@ -34,8 +34,11 @@ class mepel(base_static_page_shop):
         assert len(availability_panel) == 1, f"Expected one availability panel but getting {len(availability_panel)}"
         available_icon = availability_panel[0].find("span", class_="green")
         not_available_icon = availability_panel[0].find("span", class_="gray")
+        preorder_icon = availability_panel[0].find("span", class_="red")
         if available_icon and available_icon.find("em").text.strip() == "dostępna":
             return True
         if not_available_icon and not_available_icon.find("em").text.strip() == "brak towaru":
+            return False
+        if preorder_icon and preorder_icon.find("em").text.strip() == "przedsprzedaż":
             return False
         raise ValueError("Unable to determine item availability")
