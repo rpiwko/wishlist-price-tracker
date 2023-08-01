@@ -20,7 +20,7 @@ driver = None
 delay_min_sec = 2
 delay_max_sec = 6
 
-# How long WebDriver will poll DOM for element_to_wait
+# How long WebDriver will poll DOM for element_to_wait or DOM to be stable
 implicit_wait_in_seconds = 10
 
 
@@ -30,7 +30,8 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
 
     Args:
         url (str): web page address to get the HTML from
-        element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the HTML
+        element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the HTML;
+            if it's not defined, then page readiness will be determined base on DOM stability
         quit_webdriver (bool): if True, then driver.quit() will be called in finally block 
 
     Returns:
@@ -44,8 +45,10 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
         driver.get(url)
         if element_to_wait:
             driver.find_element(By.XPATH, element_to_wait)
+        else:
+            _wait_until_dom_is_stable()
         raw_html_string = driver.page_source
-        return  BeautifulSoup(raw_html_string, "html.parser")
+        return BeautifulSoup(raw_html_string, "html.parser")
     except Exception as e:
         logging.error(f"Unhandled exception occurred!\n{str(e)}")
         # TODO: Add mechanism to automatic retry
@@ -81,7 +84,7 @@ def _create_driver_if_needed():
         firefox_options = Options()
         firefox_options.add_argument("--headless")
         driver = webdriver.Firefox(service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"), # TODO: Parametrize the log path
-                                options=firefox_options)
+                                   options=firefox_options)
         driver.implicitly_wait(implicit_wait_in_seconds)
     else:
         logging.info("WebDriver found. No need to create new one")
@@ -95,3 +98,12 @@ def _pause_execution(pause_time_in_sec=0):
         pause_time_in_sec = random.randint(delay_min_sec, delay_max_sec)
         logging.info(f"Pausing execution for {pause_time_in_sec}s")
         time.sleep(pause_time_in_sec)
+
+
+def _wait_until_dom_is_stable():
+    for i in range(0, implicit_wait_in_seconds):
+        prev_state = driver.page_source
+        time.sleep(1)
+        if prev_state == driver.page_source:
+            return
+    raise TimeoutError("Unable to get stable DOM after defined amount of time!")

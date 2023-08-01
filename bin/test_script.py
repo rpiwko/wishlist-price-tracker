@@ -116,5 +116,9 @@ results = shop_watcher.get_the_price("https://mangastore.pl/miecz-niesmiertelneg
 print("mangastore.pl - preorder: " + str(results))
 results = shop_watcher.get_the_price("https://mangastore.pl/ghost-in-the-shell-1-p-699.html")
 print("mangastore.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://mangarden.pl/pl/products/akira-edycja-specjalna-tom-01-12386.html")
+print("mangarden.pl - available: " + str(results))
+results = shop_watcher.get_the_price("https://mangarden.pl/pl/products/akira-edycja-specjalna-tom-04-12389.html")
+print("mangarden.pl - not available item: " + str(results))
 
 print("Script completed!")

@@ -52,6 +52,28 @@
             "latestPriceDate": "",
             "highestPrice": "",
             "highestPriceDate": ""
+        },
+        {
+            "url": "https://mangastore.pl/...",
+            "isAvailable": false,
+            "isAvailableDate": "",
+            "lowestPrice": "",
+            "lowestPriceDate": "",
+            "latestPrice": "",
+            "latestPriceDate": "",
+            "highestPrice": "",
+            "highestPriceDate": ""
+        },
+        {
+            "url": "https://mangarden.pl/...",
+            "isAvailable": false,
+            "isAvailableDate": "",
+            "lowestPrice": "",
+            "lowestPriceDate": "",
+            "latestPrice": "",
+            "latestPriceDate": "",
+            "highestPrice": "",
+            "highestPriceDate": ""
         }
     ],
     "references": [
