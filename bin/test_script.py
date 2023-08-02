@@ -120,5 +120,9 @@ results = shop_watcher.get_the_price("https://mangarden.pl/pl/products/akira-edy
 print("mangarden.pl - available: " + str(results))
 results = shop_watcher.get_the_price("https://mangarden.pl/pl/products/akira-edycja-specjalna-tom-04-12389.html")
 print("mangarden.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.x-kom.pl/p/1051543-smartfon-telefon-xiaomi-poco-x4-gt-8-256gb-black.html")
+print("x-kom.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.x-kom.pl/p/1070549-smartfon-telefon-sony-xperia-5-iv-zielony.html")
+print("x-kom.pl - not available item: " + str(results))
 
 print("Script completed!")

@@ -17,7 +17,7 @@ def get_domain_from_url(url):
     Returns:
         Domain string if possible (e.g. virtualo.pl), otherwise None
     """
-    pattern = re.compile("((?<=https://www.)[a-z.]*|(?<=https://(?!www.))[a-z.]*)")
+    pattern = re.compile("((?<=https://www.)[a-z.-]*|(?<=https://(?!www.))[a-z.-]*)")
     domain = pattern.findall(url)
     if domain is None or len(domain) == 0 or len(domain[0]) == 0:
         return None
@@ -30,14 +30,14 @@ def format_and_validate_the_price(raw_price_string):
     Converts string to float number if possible
 
     Args:
-        price (str): string to convert
+        raw_price_string (str): string to convert
 
     Returns:
         Float number converted and formatted from price
     """
     raw_price_string = str(raw_price_string)
     logging.info("Raw price string before formatting: " + raw_price_string)
-    price = raw_price_string.replace(",", ".").replace("zł", "").replace("PLN", "").strip()
+    price = raw_price_string.replace(",", ".").replace("zł", "").replace("PLN", "").replace(" ", "").strip()
     logging.info("Price string after formatting: " + price)
     validate_the_price(price)
     return price
