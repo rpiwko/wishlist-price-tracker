@@ -12,8 +12,8 @@ import random
 
 
 # Delays range used to avoid being banned
-delay_min_sec = 2
-delay_max_sec = 6
+delay_min_sec = 5
+delay_max_sec = 10
 
 # How many times retry download in case of error
 max_retries = 3
@@ -46,9 +46,10 @@ def get_the_html(url):
                 # error_text += f"\nReturned text: {r.text}"
                 raise requests.exceptions.HTTPError(error_text)
         except RequestException as e:
-            logging.error(f"Getting HTML failed! Attempt: {attempt_no} of {max_retries}. Error details: {str(e)}")
+            logging.error(f"Unable to get HTML for URL='{url}' Attempt: {attempt_no} of {max_retries}. "
+                          f"Error details: {str(e)}")
             if attempt_no < max_retries:
-                _pause_execution(attempt_no * 30)
+                _pause_execution(attempt_no * 60)
                 attempt_no += 1
                 logging.info(f"Retrying... Attempt {attempt_no} of {max_retries}...")
             else:
@@ -63,7 +64,7 @@ def get_htmls(url_list):
             if url_list.index(url) < len(url_list) - 1:
                 _pause_execution()
         except Exception as e:
-            logging.error(f"Unable to extract HTML from URL='{url}'. Check earlier logs for details.")
+            logging.error(f"Unable to get HTML for URL='{url}'. Check earlier logs for details.")
             urls_with_htmls[url] = None
             if url_list.index(url) < len(url_list) - 1:
                 _pause_execution(60)
