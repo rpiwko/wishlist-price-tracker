@@ -21,7 +21,7 @@ delay_min_sec = 2
 delay_max_sec = 6
 
 # How long WebDriver will poll DOM for element_to_wait or DOM to be stable
-implicit_wait_in_seconds = 10
+implicit_wait_in_seconds = 120
 
 
 def get_the_html(url, element_to_wait=None, quit_webdriver=True):
@@ -31,7 +31,9 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     Args:
         url (str): web page address to get the HTML from
         element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the HTML;
-            if it's not defined, then page readiness will be determined base on DOM stability
+            if it's not defined, then page readiness will be determined base on DOM stability. This is slow and thus
+            not recommended approach. Use only if other methods fail (e.g. for pages with prices or availability
+            being updated by background JS without other visible impact)
         quit_webdriver (bool): if True, then driver.quit() will be called in finally block 
 
     Returns:
@@ -101,9 +103,12 @@ def _pause_execution(pause_time_in_sec=0):
 
 
 def _wait_until_dom_is_stable():
+    check_interval = 5
     for i in range(0, implicit_wait_in_seconds):
         prev_state = driver.page_source
-        time.sleep(1)
+        time.sleep(check_interval)
         if prev_state == driver.page_source:
+            logging.info(f"DOM is stable after {i*check_interval + check_interval} seconds ")
             return
+        logging.info("DOM is not stable. Still waiting...")
     raise TimeoutError("Unable to get stable DOM after defined amount of time!")
