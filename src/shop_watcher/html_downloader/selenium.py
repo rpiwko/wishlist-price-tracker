@@ -11,10 +11,11 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
 import random
+from .. import string_tools
 
 
-# WebDriver instance
-driver = None
+# WebDriver instances for different domains
+drivers = {}
 
 # Delays range used to avoid being banned
 delay_min_sec = 2
@@ -39,76 +40,84 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
     """
-    logging.info("Getting HTML with html_downloader.selenium for URL=" + url)
 
-    global driver
+    domain = string_tools.get_domain_from_url(url)
+    logging.info(f"[{domain}] Getting HTML with html_downloader.selenium for URL={url}")
+
+    global drivers
     try:
-        _create_driver_if_needed()
-        driver.get(url)
+        _create_driver_if_needed(domain)
+        drivers[domain].get(url)
         if element_to_wait:
-            driver.find_element(By.XPATH, element_to_wait)
+            drivers[domain].find_element(By.XPATH, element_to_wait)
         else:
-            _wait_until_dom_is_stable()
-        raw_html_string = driver.page_source
+            _wait_until_dom_is_stable(domain)
+        raw_html_string = drivers[domain].page_source
         return BeautifulSoup(raw_html_string, "html.parser")
     except Exception as e:
-        logging.error(f"Unhandled exception occurred!\n{str(e)}")
+        logging.error(f"[{domain}] Unhandled exception occurred!\n{str(e)}")
         # TODO: Add mechanism to automatic retry
         raise
     finally:
         if quit_webdriver:
-            driver.quit()
-            driver = None
-            logging.info("WebDriver object was disposed")
+            drivers[domain].quit()
+            del drivers[domain]
+            logging.info(f"[{domain}] WebDriver object was disposed. Remained WebDrivers: {str(drivers)}")
 
 
 def get_htmls(url_list, element_to_wait=None):
     urls_with_htmls = {}
     for url in url_list:
+        domain = string_tools.get_domain_from_url(url)
         try:
             if url_list.index(url) < len(url_list) - 1:
                 urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait, quit_webdriver=False)
-                _pause_execution()
+                _pause_execution(domain)
             else:
                 urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
         except Exception as e:
-            logging.error(f"Unable to extract HTML from URL='{url}' because of error:\n{str(e)}")
+            logging.error(f"[{domain}] Unable to extract HTML from URL='{url}' because of error:\n{str(e)}")
             urls_with_htmls[url] = None
+            if url_list.index(url) < len(url_list) - 1:
+                _pause_execution(domain, 60)
             continue
 
     return urls_with_htmls
 
 
-def _create_driver_if_needed():
-    global driver
-    if not driver:
-        logging.info("WebDriver not found. New instance will be created")
+def _create_driver_if_needed(domain):
+    global drivers
+    logging.info(f"[{domain}] Available WebDrivers: {str(drivers)}")
+    if domain not in drivers.keys():
+        logging.info(f"[{domain}] WebDriver not found. New instance will be created")
         firefox_options = Options()
         firefox_options.add_argument("--headless")
-        driver = webdriver.Firefox(service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"), # TODO: Parametrize the log path
-                                   options=firefox_options)
-        driver.implicitly_wait(implicit_wait_in_seconds)
+        drivers[domain] = webdriver.Firefox(
+            # TODO: Parametrize the log path
+            service=Service("/usr/local/bin/geckodriver", log_path="geckodriver.log"),
+            options=firefox_options)
+        drivers[domain].implicitly_wait(implicit_wait_in_seconds)
     else:
-        logging.info("WebDriver found. No need to create new one")
+        logging.info(f"[{domain}] WebDriver found. No need to create new one")
 
 
-def _pause_execution(pause_time_in_sec=0):
+def _pause_execution(domain, pause_time_in_sec=0):
     if pause_time_in_sec:
-        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        logging.info(f"[{domain}] Pausing execution for {pause_time_in_sec}s")
         time.sleep(pause_time_in_sec)
     else:
         pause_time_in_sec = random.randint(delay_min_sec, delay_max_sec)
-        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        logging.info(f"[{domain}] Pausing execution for {pause_time_in_sec}s")
         time.sleep(pause_time_in_sec)
 
 
-def _wait_until_dom_is_stable():
+def _wait_until_dom_is_stable(domain):
     check_interval = 5
     for i in range(0, implicit_wait_in_seconds):
-        prev_state = driver.page_source
+        prev_state = drivers[domain].page_source
         time.sleep(check_interval)
-        if prev_state == driver.page_source:
-            logging.info(f"DOM is stable after {i*check_interval + check_interval} seconds ")
+        if prev_state == drivers[domain].page_source:
+            logging.info(f"[{domain}] DOM is stable after {i*check_interval + check_interval} seconds ")
             return
-        logging.info("DOM is not stable. Still waiting...")
+        logging.info(f"[{domain}] DOM is not stable. Still waiting...")
     raise TimeoutError("Unable to get stable DOM after defined amount of time!")

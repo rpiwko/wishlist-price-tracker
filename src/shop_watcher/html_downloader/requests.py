@@ -9,6 +9,7 @@ from requests import get, RequestException
 from bs4 import BeautifulSoup
 import time
 import random
+from .. import string_tools
 
 
 # Delays range used to avoid being banned
@@ -29,7 +30,9 @@ def get_the_html(url):
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
     """
-    logging.info("Getting HTML with html_downloader.requests for URL=" + url)
+
+    domain = string_tools.get_domain_from_url(url)
+    logging.info(f"[{domain}] Getting HTML with html_downloader.requests for URL={url}")
 
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0"}
     attempt_no = 1
@@ -46,12 +49,12 @@ def get_the_html(url):
                 # error_text += f"\nReturned text: {r.text}"
                 raise requests.exceptions.HTTPError(error_text)
         except RequestException as e:
-            logging.error(f"Unable to get HTML for URL='{url}' Attempt: {attempt_no} of {max_retries}. "
+            logging.error(f"[{domain}] Unable to get HTML for URL='{url}' Attempt: {attempt_no} of {max_retries}. "
                           f"Error details: {str(e)}")
             if attempt_no < max_retries:
-                _pause_execution(attempt_no * 60)
+                _pause_execution(domain, pause_time_in_sec=(attempt_no * 60))
                 attempt_no += 1
-                logging.info(f"Retrying... Attempt {attempt_no} of {max_retries}...")
+                logging.info(f"[{domain}] Retrying... Attempt {attempt_no} of {max_retries}...")
             else:
                 raise
 
@@ -59,15 +62,16 @@ def get_the_html(url):
 def get_htmls(url_list):
     urls_with_htmls = {}
     for url in url_list:
+        domain = string_tools.get_domain_from_url(url)
         try:
             urls_with_htmls[url] = get_the_html(url)
             if url_list.index(url) < len(url_list) - 1:
-                _pause_execution()
+                _pause_execution(domain)
         except Exception as e:
-            logging.error(f"Unable to get HTML for URL='{url}'. Check earlier logs for details.")
+            logging.error(f"[{domain}] Unable to get HTML for URL='{url}'. Check earlier logs for details.")
             urls_with_htmls[url] = None
             if url_list.index(url) < len(url_list) - 1:
-                _pause_execution(60)
+                _pause_execution(domain, pause_time_in_sec=60)
             continue
     return urls_with_htmls
 
@@ -93,11 +97,11 @@ def _is_response_ok(resp):
             and content_type.find('html') > -1)
 
 
-def _pause_execution(pause_time_in_sec=0):
+def _pause_execution(domain, pause_time_in_sec=0):
     if pause_time_in_sec:
-        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        logging.info(f"[{domain}] Pausing execution for {pause_time_in_sec}s")
         time.sleep(pause_time_in_sec)
     else:
         pause_time_in_sec = random.randint(delay_min_sec, delay_max_sec)
-        logging.info(f"Pausing execution for {pause_time_in_sec}s")
+        logging.info(f"[{domain}] Pausing execution for {pause_time_in_sec}s")
         time.sleep(pause_time_in_sec)

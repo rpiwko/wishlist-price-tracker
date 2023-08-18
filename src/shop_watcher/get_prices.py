@@ -25,6 +25,7 @@ def get_prices(url_list, show_progress_bar=False):
         {"url1": [12.34, True], "url2": [56.78, True], "url3": [None, False], "url4": [99.99, False]...}
         If price could not be extracted from URL, then appropriate error is logged and price is set to None
     """
+
     grouped_urls = _group_urls_by_domain(url_list)
     urls_with_prices = {}
     processed_urls_cnt = 0
@@ -38,11 +39,11 @@ def get_prices(url_list, show_progress_bar=False):
         for url in domain_urls_with_prices:
             if domain_urls_with_prices[url]:
                 try:
-                    logging.info("Formatting and validating price found under URL=" + url)
+                    logging.info(f"[{domain}] Formatting and validating price found under URL={url}")
                     valid_price_string = string_tools.format_and_validate_the_price(domain_urls_with_prices[url][0])
                     urls_with_prices[url] = valid_price_string, domain_urls_with_prices[url][1]
                 except ValueError as e:
-                    logging.error(f"Unable to get valid price for URL='{url}': {str(e)}")
+                    logging.error(f"[{domain}] Unable to get valid price for URL='{url}': {str(e)}")
                     urls_with_prices[url] = None, domain_urls_with_prices[url][1]
             else:
                 urls_with_prices[url] = None, None
@@ -50,8 +51,9 @@ def get_prices(url_list, show_progress_bar=False):
         processed_urls_cnt += len(grouped_urls[domain])
         if show_progress_bar:
             _print_progress_bar(processed_urls_cnt, len(url_list))
-        elif processed_urls_cnt > 0:
-            print(f"Total progress: {processed_urls_cnt}/{len(url_list)}")
+        else:
+            print(f"Getting prices for {domain} completed!")
+
     if processed_urls_cnt != len(url_list):
         print()
         print(f"Number of skipped URLs: {len(url_list) - processed_urls_cnt}. Check logs for more details")
