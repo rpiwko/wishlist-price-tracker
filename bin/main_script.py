@@ -33,7 +33,8 @@ urls_with_files = json_manager.get_offers_urls(etc_dir_path)
 logging.info("Found URLs:\n" + str(urls_with_files))
 
 print(f"Total number of URLs to process: {len(urls_with_files)}")
-urls_with_prices_and_availability = shop_watcher.get_prices(urls_with_files.keys(), show_progress_bar=True)
+urls_with_prices_and_availability = \
+    (shop_watcher.get_prices(urls_with_files.keys(), show_progress_bar=True, parallel=True))
 json_manager.update_prices(urls_with_files, urls_with_prices_and_availability)
 
 print("Checking prices complete!")

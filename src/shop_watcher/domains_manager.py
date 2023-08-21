@@ -43,5 +43,4 @@ def validate_domain(domain):
     """
     if domain not in domains_vs_modules.keys():
         error_text = f"Unexpected URL domain detected: '{domain}'. Accepted domains are: {list(domains_vs_modules.keys())}"
-        logging.error(error_text)
         raise ValueError(error_text)
