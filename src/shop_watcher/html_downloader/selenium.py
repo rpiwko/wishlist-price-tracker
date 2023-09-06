@@ -113,11 +113,11 @@ def _pause_execution(domain, pause_time_in_sec=0):
 
 def _wait_until_dom_is_stable(domain):
     check_interval = 5
-    for i in range(0, implicit_wait_in_seconds):
+    for i in range(0, round(implicit_wait_in_seconds/check_interval)):
         prev_state = drivers[domain].page_source
         time.sleep(check_interval)
         if prev_state == drivers[domain].page_source:
             logging.info(f"[{domain}] DOM is stable after {i*check_interval + check_interval} seconds ")
             return
         logging.info(f"[{domain}] DOM is not stable. Still waiting...")
-    raise TimeoutError("Unable to get stable DOM after defined amount of time!")
+    raise TimeoutError(f"Unable to get stable DOM after defined amount of time ({implicit_wait_in_seconds}s)!")
