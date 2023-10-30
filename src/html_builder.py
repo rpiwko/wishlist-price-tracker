@@ -41,9 +41,9 @@ def build_wishlist_items_table(objects_list):
             html_table += f"<td rowspan={offers_no}><a href='{item['jsonFile']}'>{item['title']}</a></td>"
             html_table += f"<td rowspan={offers_no}>{item['author']}</td>"
 
-        best_price_for_item, worst_price_for_item = _get_best_and_worst_latest_prices(item)
-        logging.info(f"best_price_for_item={best_price_for_item}")
-        logging.info(f"worst_price_for_item={worst_price_for_item}")
+        best_price_today, worst_price_today = _get_best_and_worst_prices_today(item)
+        logging.info(f"best_price_today={best_price_today}")
+        logging.info(f"worst_price_today={worst_price_today}")
 
         if offers_no == 0:
             html_table += f"<td>{empty_value}</td>"
@@ -61,9 +61,12 @@ def build_wishlist_items_table(objects_list):
                 url = offer['url']
                 html_table += f"<td><a href='{url}'>{_get_short_url(url)}</a></td>"
                 html_table += _get_is_available_cell(offer)
-                html_table += _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item)
+                html_table += _get_cells_with_prices(offer, best_price_today, worst_price_today)
                 if n == 0:
-                    html_table += f"<td rowspan={offers_no}>{item['comment']}</td>"
+                    comment = item['comment']
+                    if _is_best_price_ever(best_price_today, item):
+                        comment = "BEST PRICE EVER!" + "<br><br>" + comment if comment else "BEST PRICE EVER!"
+                    html_table += f"<td rowspan={offers_no}>{comment}</td>"
                 html_table += "</tr>"
             html_table += "</tbody>\n"
 
@@ -144,16 +147,32 @@ def _get_short_url(url):
     return short_url
 
 
-def _get_best_and_worst_latest_prices(item):
-    best_price_for_item = None
-    worst_price_for_item = None
+def _get_best_and_worst_prices_today(item):
+    best_price_today = None
+    worst_price_today = None
     for offer in item["offers"]:
         if offer["latestPrice"] and offer["isAvailable"]:
-            if best_price_for_item is None or best_price_for_item > float(offer["latestPrice"]):
-                best_price_for_item = float(offer["latestPrice"])
-            if worst_price_for_item is None or worst_price_for_item < float(offer["latestPrice"]):
-                worst_price_for_item = float(offer["latestPrice"])
-    return best_price_for_item, worst_price_for_item
+            if best_price_today is None or best_price_today > float(offer["latestPrice"]):
+                best_price_today = float(offer["latestPrice"])
+            if worst_price_today is None or worst_price_today < float(offer["latestPrice"]):
+                worst_price_today = float(offer["latestPrice"])
+    return best_price_today, worst_price_today
+
+
+def _is_best_price_ever(best_price_today, item):
+    if best_price_today is None:
+        return False
+    lowest_among_lowest_prices = None
+    for offer in item["offers"]:
+        if offer["lowestPrice"]:
+            if lowest_among_lowest_prices is None or lowest_among_lowest_prices > float(offer["lowestPrice"]):
+                lowest_among_lowest_prices = float(offer["lowestPrice"])
+    logging.info(f"lowest_among_lowest_prices={lowest_among_lowest_prices}")
+    if lowest_among_lowest_prices is not None and best_price_today <= lowest_among_lowest_prices:
+        logging.info(f"Best price ever!")
+        return True
+    else:
+        return False
 
 
 def _get_categories(objects_list):
