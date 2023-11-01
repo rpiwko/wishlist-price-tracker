@@ -4,6 +4,7 @@ Main script to download the latest prices and generate result HTML page
 
 import logging
 import sys
+from datetime import datetime
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.joinpath("../src")))
 from logging_setup import initialize_logging
@@ -48,8 +49,20 @@ logging.info("Found items:\n" + str(wishlist_items))
 html_category_selector = html_builder.build_category_selector(wishlist_items)
 html_wishlist_items_table = html_builder.build_wishlist_items_table(wishlist_items)
 
-html_builder.put_element_into_template(html_category_selector, page_template_file, "{{CATEGORIES_SELECTOR}}", page_output_file)
-html_builder.put_element_into_template(html_wishlist_items_table, page_output_file, "{{WISHLIST_ITEMS_TABLE}}", page_output_file)
+html_builder.put_element_into_template(datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                       page_template_file,
+                                       "{{TIMESTAMP}}",
+                                       page_output_file)
+
+html_builder.put_element_into_template(html_category_selector,
+                                       page_output_file,
+                                       "{{CATEGORIES_SELECTOR}}",
+                                       page_output_file)
+
+html_builder.put_element_into_template(html_wishlist_items_table,
+                                       page_output_file,
+                                       "{{WISHLIST_ITEMS_TABLE}}",
+                                       page_output_file)
 
 print("Generating result HTML page complete!")
 logging.info("Generating result HTML page complete!")
