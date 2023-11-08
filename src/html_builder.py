@@ -127,7 +127,7 @@ def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
         highest_price_cell = f"<td>{float(offer['highestPrice']):.2f}</td>"
     else:
         highest_price_cell = f"<td>{empty_value}</td>"
-    if offer["isAvailable"]:
+    if offer["isAvailable"] and offer["latestPrice"]:
         try:
             if float(offer["latestPrice"]) == best_price_for_item:
                 logging.info(f"The latestPrice={offer['latestPrice']} is today the best one!")
