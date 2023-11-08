@@ -12,57 +12,57 @@
         {
             "url": "https://bonito.pl...",
             "isAvailable": true,
-            "isAvailableDate": "",
-            "lowestPrice": "",
-            "lowestPriceDate": "",
-            "latestPrice": "",
-            "latestPriceDate": "",
-            "highestPrice": "",
-            "highestPriceDate": ""
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         },
         {
             "url": "https://www.taniaksiazka.pl...",
             "isAvailable": true,
-            "isAvailableDate": "",
-            "lowestPrice": "",
-            "lowestPriceDate": "",
-            "latestPrice": "",
-            "latestPriceDate": "",
-            "highestPrice": "",
-            "highestPriceDate": ""
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         },
         {
             "url": "https://woblink.pl...",
             "isAvailable": true,
-            "isAvailableDate": "",
-            "lowestPrice": "",
-            "lowestPriceDate": "",
-            "latestPrice": "",
-            "latestPriceDate": "",
-            "highestPrice": "",
-            "highestPriceDate": ""
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         },
         {
             "url": "https://gildia.pl...",
             "isAvailable": true,
-            "isAvailableDate": "",
-            "lowestPrice": "",
-            "lowestPriceDate": "",
-            "latestPrice": "",
-            "latestPriceDate": "",
-            "highestPrice": "",
-            "highestPriceDate": ""
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         },
         {
             "url": "https://dvdmax.pl...",
             "isAvailable": true,
-            "isAvailableDate": "",
-            "lowestPrice": "",
-            "lowestPriceDate": "",
-            "latestPrice": "",
-            "latestPriceDate": "",
-            "highestPrice": "",
-            "highestPriceDate": ""
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         }
     ],
     "references": [
