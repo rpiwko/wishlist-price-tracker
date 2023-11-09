@@ -96,6 +96,17 @@
             "latestPriceDate": null,
             "highestPrice": null,
             "highestPriceDate": null
+        },
+        {
+            "url": "https://rebel.pl...",
+            "isAvailable": true,
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         }
     ],
     "references": [
