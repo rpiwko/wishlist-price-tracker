@@ -29,7 +29,7 @@ overridden in each class which inherits from base_dynamic_page_shop!")
             url(str): URL to web store item
 
         Returns:
-            url (str): Raw price text extracted from HTML which may contain some garbage and formatting characters
+            Tuple with raw price text extracted from HTML and availability flag
         """
         return self._get_price_and_availability_from_html(html_downloader.get_the_html(url, element_to_wait=self.get_element_to_wait()))
 
@@ -41,8 +41,8 @@ overridden in each class which inherits from base_dynamic_page_shop!")
             url_list: list of URLs to get the prices from
 
         Returns:
-            Dictionary with URLs and raw price texts:
-            {"url1": "raw_price_text1", "url2": "raw_price_text2", "url3": "raw_price_text3"...}
+            Dictionary with URLs, raw price texts and availability flags:
+            {"url1": ("raw_price_text1", True), "url2": ("raw_price_text2", True), "url3": ("raw_price_text3", False)...}
         """
         urls_with_prices = {}
         urls_with_htmls = html_downloader.get_htmls(url_list, element_to_wait=self.get_element_to_wait())
@@ -64,7 +64,7 @@ overridden in each class which inherits from base_dynamic_page_shop!")
             html (obj): BeautifulSoup object parsed with html.parser
 
         Returns:
-            Raw price text extracted from HTML which may contain some garbage and formatting characters
+            Tuple with raw price text extracted from HTML and availability flag
             None if html was None
         """
         raise NotImplementedError("The _get_price_and_availability_from_html() method needs to be \

@@ -29,6 +29,7 @@ def get_the_html(url):
 
     Returns:
         BeautifulSoup object created with "html.parser" and representing HTML page
+        Empty string ("") when 404 was received
     """
 
     domain = string_tools.get_domain_from_url(url)
@@ -40,6 +41,9 @@ def get_the_html(url):
     while True:
         try:
             r = get(url, timeout=60, headers=headers)
+            if r.status_code == 404:
+                logging.warning(f"[{domain}] 404: page not found!")
+                return ""
             if _is_response_ok(r):
                 raw_html_string = r.text
                 logging.debug(f"Downloaded HTML:\n{raw_html_string}")
