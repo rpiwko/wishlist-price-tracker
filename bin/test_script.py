@@ -30,6 +30,8 @@ results = shop_watcher.get_the_price("https://virtualo.pl/ebook/hobbit-czyli-tam
 print("virtualo.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://virtualo.pl/ebook/biala-bluzka-i7148/")
 print("virtualo.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://virtualo.pl/ebook/przygody-dobrego-wojaka-szwejka-czasu-wojny-swiatowej-i239153/")
+print("virtualo.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.publio.pl/hobbit-j-r-r-tolkien,p87958.html")
 print("publio.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.publio.pl/opowiadania-wszystkie-leopold-tyrmand,p70957.html")

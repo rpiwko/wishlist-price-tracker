@@ -32,5 +32,8 @@ class virtualo(base_static_page_shop):
         suggestion_wrapper = html.find_all("div", class_="suggestion-wrapper")
         if len(suggestion_wrapper) > 0 and suggestion_wrapper[0].find("span").text.strip() == "Produkt niedostępny.":
             return False
-        else:
-            return True
+        not_available_info = html.find_all(lambda tag:tag.name=="div" and "Produkt chwilowo niedostępny" in tag.text,
+                                           class_="column")
+        if len(not_available_info) > 0:
+            return False
+        return True
