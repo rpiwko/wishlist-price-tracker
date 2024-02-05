@@ -62,6 +62,8 @@ results = shop_watcher.get_the_price("https://www.taniaksiazka.pl/zgroza-w-dunwi
 print("taniaksiazka.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.taniaksiazka.pl/the-thing-on-the-doorstep-and-other-weird-stories-howard-phillips-lovecraft-p-1763985.html")
 print("taniaksiazka.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.taniaksiazka.pl/dom-usherow-p-1964911.html")
+print("taniaksiazka.pl - preorder: " + str(results))
 results = shop_watcher.get_the_price("https://vesper.pl/bestsellery/1210-zgroza-w-dunwich-i-inne-przerazajace-opowiesci-wyd2022-howard-phillips-lovecraft-oprawa-twarda-9788377314456")
 print("vesper.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://vesper.pl/literatura/1170-piaty-kier-dan-simmons-oprawa-twarda-9788377314364")

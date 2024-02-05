@@ -38,5 +38,8 @@ class taniaksiazka(base_dynamic_page_shop):
             assert availability_info.text in ["Chwilowo niedostępny", "Produkt niedostępny"],\
                 f"Unexpected availability info found: {availability_info.text}"
             return False
-        else:
-            return True
+        preorder_info = html.find("div", class_="product-info").find_all("a", href="/Zapowiedzi")
+        if len(preorder_info) > 0:
+            logging.info("This offer is preorder!")
+            return False
+        return True
