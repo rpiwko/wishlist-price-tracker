@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Helper</title>
+    <script>
+        function generateSearchUrls() {
+            textToSearch = document.getElementById("txtSearch").value
+            document.getElementById("urls").innerHTML = "";
+            for (var category of document.getElementsByName("category")) {
+                if (category.checked && category.id == "ebooks") {
+                    addUrlToList(getSearchUrlForVirtualo(textToSearch))
+                    addUrlToList(getSearchUrlForNexto(textToSearch))
+                    addUrlToList(getSearchUrlForPublio(textToSearch))
+                    addUrlToList(getSearchUrlForEbookpoint(textToSearch))
+                    addUrlToList(getSearchUrlForWoblink(textToSearch, category.id))
+                    addUrlToList(getSearchUrlForSwiatksiazki(textToSearch))
+                }
+                if (category.checked && category.id == "books") {
+                    addUrlToList(getSearchUrlForBonito(textToSearch))
+                    addUrlToList(getSearchUrlForTaniaksiazka(textToSearch))
+                    addUrlToList(getSearchUrlForWoblink(textToSearch, category.id))
+                    addUrlToList(getSearchUrlForSwiatksiazki(textToSearch))
+                    addUrlToList(getSearchUrlForGildia(textToSearch))
+                    addUrlToList(getSearchUrlForDvdmax(textToSearch))
+                    addUrlToList(getSearchUrlForRebel(textToSearch))
+                }
+            }
+        }
+        function addUrlToList(url) {
+            var li = document.createElement("li")
+            var a = document.createElement("a")
+            a.setAttribute("href", url)
+            a.setAttribute("target","_blank")
+            a.textContent = url
+            li.appendChild(a)
+            document.getElementById("urls").appendChild(li)
+        }
+        function encodePolishCharsForISO8859_2(textToEncode) {
+            encodedText = textToEncode.replace("ł", "%B3").replace("ą", "%B1").replace("ć", "%E6")
+            encodedText = encodedText.replace("ę", "%EA").replace("ń", "%F1").replace("ó", "%F3")
+            encodedText = encodedText.replace("ś", "%B6").replace("ź", "%BC").replace("ż", "%BF")
+            encodedText = encodedText.replace("Ł", "%A3").replace("Ą", "%A1").replace("Ć", "%C6")
+            encodedText = encodedText.replace("Ę", "%CA").replace("Ń", "%D1").replace("Ó", "%D3")
+            encodedText = encodedText.replace("Ś", "%A6").replace("Ź", "%AC").replace("Ż", "%AF")
+            return encodedText
+        }
+        function getSearchUrlForVirtualo(textToSearch) {
+            return "https://virtualo.pl/?q=" + textToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForNexto(textToSearch) {
+            return "https://www.nexto.pl/szukaj.xml?scid=&search-clause=" + textToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForPublio(textToSearch) {
+            return "https://www.publio.pl/szukaj.html?q=" + textToSearch
+        }
+        function getSearchUrlForEbookpoint(textToSearch) {
+            encodedTextToSearch = encodePolishCharsForISO8859_2(textToSearch)
+            return "https://ebookpoint.pl/search?qa=&szukaj=" + encodedTextToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForWoblink(textToSearch, category) {
+            if (category == "ebooks") {
+                return "https://woblink.com/katalog/ebooki?szukasz=" + textToSearch.replace(" ", "+")
+            }
+            if (category == "books") {
+                return "https://woblink.com/katalog/ksiazki?szukasz=" + textToSearch.replace(" ", "+")
+            }
+            return "https://woblink.com/katalog/al?szukasz=" + textToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForSwiatksiazki(textToSearch) {
+            return "https://www.swiatksiazki.pl/search/" + textToSearch
+        }
+        function getSearchUrlForBonito(textToSearch) {
+            var stringToEncode = "/v1/search/products/?search="
+            stringToEncode = stringToEncode + textToSearch.replace(" ", "+")
+            stringToEncode = encodeURI(stringToEncode)
+            return "https://bonito.pl/szukaj/?results=" + btoa(stringToEncode)
+        }
+        function getSearchUrlForTaniaksiazka(textToSearch) {
+            encodedTextToSearch = encodePolishCharsForISO8859_2(textToSearch)
+            return "https://www.taniaksiazka.pl/Szukaj/q-" + encodedTextToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForGildia(textToSearch) {
+            return "https://www.gildia.pl/szukaj?q=" + textToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForDvdmax(textToSearch) {
+            return "https://www.dvdmax.pl/dvd/szukaj?q=" + textToSearch.replace(" ", "+")
+        }
+        function getSearchUrlForRebel(textToSearch) {
+            return "https://www.rebel.pl/site/search?phrase=" + textToSearch.replace(" ", "+")
+        }
+    </script>
+</head>
+
+<body>
+<header id="main-header">
+    <div class="container-header">
+        <h1 style="text-align:center">Search Helper</h1>
+    </div>
+</header>
+
+<div>
+    <h3>Category</h3>
+    <input checked id="books" name="category" type="radio">
+    <label for="books">Books</label><br>
+    <input id="ebooks" name="category" type="radio">
+    <label for="ebooks">eBooks</label><br>
+</div>
+
+<div>
+    <h3>Text to search (e.g. title or author)</h3>
+    <input id="txtSearch" onkeydown="if (event.keyCode == 13)
+                                         document.getElementById('btnGenerateUrls').click()" type="text">
+    <button id="btnGenerateUrls" onclick="generateSearchUrls()">Generate search URLs</button>
+</div>
+
+<div>
+    <h3>Search URLs</h3>
+    <ul id="urls"></ul>
+</div>
+
+</body>
+</html>
