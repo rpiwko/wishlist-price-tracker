@@ -139,5 +139,11 @@ results = shop_watcher.get_the_price("https://www.rebel.pl/gry-planszowe/everdel
 print("rebel.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.rebel.pl/gry-planszowe/aliens-bug-hunt-2002009.html")
 print("rebel.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/fantasy/legenda-o-szkarlatnych-oblokach-wydanie-zbiorcze/")
+print("lostintime.pl - available item: " + str(results))
+results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/obyczajowe/wypadek-na-polowaniu/")
+print("lostintime.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/fantasy/toppi-kolekcja-tom-6-japonia/")
+print("lostintime.pl - preorder: " + str(results))
 
 print("Script completed!")
