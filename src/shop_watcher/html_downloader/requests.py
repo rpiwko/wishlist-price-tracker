@@ -35,7 +35,7 @@ def get_the_html(url):
     domain = string_tools.get_domain_from_url(url)
     logging.info(f"[{domain}] Getting HTML with html_downloader.requests for URL={url}")
 
-    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0"}
+    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0"}
     attempt_no = 1
 
     while True:
