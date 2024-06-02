@@ -37,57 +37,57 @@
             document.getElementById("urls").appendChild(li)
         }
         function encodePolishCharsForISO8859_2(textToEncode) {
-            encodedText = textToEncode.replace("ł", "%B3").replace("ą", "%B1").replace("ć", "%E6")
-            encodedText = encodedText.replace("ę", "%EA").replace("ń", "%F1").replace("ó", "%F3")
-            encodedText = encodedText.replace("ś", "%B6").replace("ź", "%BC").replace("ż", "%BF")
-            encodedText = encodedText.replace("Ł", "%A3").replace("Ą", "%A1").replace("Ć", "%C6")
-            encodedText = encodedText.replace("Ę", "%CA").replace("Ń", "%D1").replace("Ó", "%D3")
-            encodedText = encodedText.replace("Ś", "%A6").replace("Ź", "%AC").replace("Ż", "%AF")
+            encodedText = textToEncode.replaceAll("ł", "%B3").replaceAll("ą", "%B1").replaceAll("ć", "%E6")
+            encodedText = encodedText.replaceAll("ę", "%EA").replaceAll("ń", "%F1").replaceAll("ó", "%F3")
+            encodedText = encodedText.replaceAll("ś", "%B6").replaceAll("ź", "%BC").replaceAll("ż", "%BF")
+            encodedText = encodedText.replaceAll("Ł", "%A3").replaceAll("Ą", "%A1").replaceAll("Ć", "%C6")
+            encodedText = encodedText.replaceAll("Ę", "%CA").replaceAll("Ń", "%D1").replaceAll("Ó", "%D3")
+            encodedText = encodedText.replaceAll("Ś", "%A6").replaceAll("Ź", "%AC").replaceAll("Ż", "%AF")
             return encodedText
         }
         function getSearchUrlForVirtualo(textToSearch) {
-            return "https://virtualo.pl/?q=" + textToSearch.replace(" ", "+")
+            return "https://virtualo.pl/?q=" + textToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForNexto(textToSearch) {
-            return "https://www.nexto.pl/szukaj.xml?scid=&search-clause=" + textToSearch.replace(" ", "+")
+            return "https://www.nexto.pl/szukaj.xml?scid=&search-clause=" + textToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForPublio(textToSearch) {
             return "https://www.publio.pl/szukaj.html?q=" + textToSearch
         }
         function getSearchUrlForEbookpoint(textToSearch) {
             encodedTextToSearch = encodePolishCharsForISO8859_2(textToSearch)
-            return "https://ebookpoint.pl/search?qa=&szukaj=" + encodedTextToSearch.replace(" ", "+")
+            return "https://ebookpoint.pl/search?qa=&szukaj=" + encodedTextToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForWoblink(textToSearch, category) {
             if (category == "ebooks") {
-                return "https://woblink.com/katalog/ebooki?szukasz=" + textToSearch.replace(" ", "+")
+                return "https://woblink.com/katalog/ebooki?szukasz=" + textToSearch.replaceAll(" ", "+")
             }
             if (category == "books") {
-                return "https://woblink.com/katalog/ksiazki?szukasz=" + textToSearch.replace(" ", "+")
+                return "https://woblink.com/katalog/ksiazki?szukasz=" + textToSearch.replaceAll(" ", "+")
             }
-            return "https://woblink.com/katalog/al?szukasz=" + textToSearch.replace(" ", "+")
+            return "https://woblink.com/katalog/al?szukasz=" + textToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForSwiatksiazki(textToSearch) {
             return "https://www.swiatksiazki.pl/search/" + textToSearch
         }
         function getSearchUrlForBonito(textToSearch) {
             var stringToEncode = "/v1/search/products/?search="
-            stringToEncode = stringToEncode + textToSearch.replace(" ", "+")
+            stringToEncode = stringToEncode + textToSearch.replaceAll(" ", "+")
             stringToEncode = encodeURI(stringToEncode)
             return "https://bonito.pl/szukaj/?results=" + btoa(stringToEncode)
         }
         function getSearchUrlForTaniaksiazka(textToSearch) {
             encodedTextToSearch = encodePolishCharsForISO8859_2(textToSearch)
-            return "https://www.taniaksiazka.pl/Szukaj/q-" + encodedTextToSearch.replace(" ", "+")
+            return "https://www.taniaksiazka.pl/Szukaj/q-" + encodedTextToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForGildia(textToSearch) {
-            return "https://www.gildia.pl/szukaj?q=" + textToSearch.replace(" ", "+")
+            return "https://www.gildia.pl/szukaj?q=" + textToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForDvdmax(textToSearch) {
-            return "https://www.dvdmax.pl/dvd/szukaj?q=" + textToSearch.replace(" ", "+")
+            return "https://www.dvdmax.pl/dvd/szukaj?q=" + textToSearch.replaceAll(" ", "+")
         }
         function getSearchUrlForRebel(textToSearch) {
-            return "https://www.rebel.pl/site/search?phrase=" + textToSearch.replace(" ", "+")
+            return "https://www.rebel.pl/site/search?phrase=" + textToSearch.replaceAll(" ", "+")
         }
     </script>
 </head>
