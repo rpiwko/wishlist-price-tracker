@@ -10,7 +10,7 @@ from .base_dynamic_page_shop import base_dynamic_page_shop
 class publio(base_dynamic_page_shop):
 
     def get_element_to_wait(self):
-        return "//div[@class='price']"
+        return "//div[@class='wrapper product-card__buy']"
 
     def get_supported_domain(self):
         return "publio.pl"
@@ -19,7 +19,7 @@ class publio(base_dynamic_page_shop):
         price_string = None
         is_available = None
         if html:
-            product_card = html.find_all("section", class_="product-card-header")
+            product_card = html.find_all("div", class_="product-card__header")
             assert len(product_card) == 1, f"Expected one product card section but getting {len(product_card)}"
             is_available = self._is_available(product_card[0])
             logging.info("is_available=" + str(is_available))
