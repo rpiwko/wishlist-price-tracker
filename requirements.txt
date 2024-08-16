@@ -2,7 +2,7 @@ async-generator==1.10
 attrs==22.1.0
 beautifulsoup4==4.12.3
 bs4==0.0.1
-certifi==2023.7.22
+certifi==2024.7.4
 charset-normalizer==2.1.1
 exceptiongroup==1.0.4
 h11==0.14.0
