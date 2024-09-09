@@ -54,6 +54,28 @@
             "highestPriceDate": null
         },
         {
+            "url": "https://woblink.com/...",
+            "isAvailable": true,
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
+        },
+        {
+            "url": "https://www.swiatksiazki.pl...",
+             "isAvailable": true,
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
+        },
+        {
             "url": "https://mangastore.pl/...",
             "isAvailable": true,
             "isAvailableDate": null,
@@ -77,6 +99,17 @@
         },
         {
             "url": "https://lostintime.pl/...",
+            "isAvailable": true,
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
+        },
+        {
+            "url": "https://dvdmax.pl...",
             "isAvailable": true,
             "isAvailableDate": null,
             "lowestPrice": null,
