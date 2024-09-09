@@ -115,6 +115,7 @@ def _get_is_available_cell(offer):
 
 
 def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
+    # Enter values
     if offer['lowestPrice']:
         lowest_price_cell = f"<td>{float(offer['lowestPrice']):.2f}</td>"
     else:
@@ -127,6 +128,8 @@ def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
         highest_price_cell = f"<td>{float(offer['highestPrice']):.2f}</td>"
     else:
         highest_price_cell = f"<td>{empty_value}</td>"
+
+    # Add colors for best and worst prices
     if offer["isAvailable"] and offer["latestPrice"]:
         try:
             if float(offer["latestPrice"]) == best_price_for_item:
@@ -138,6 +141,7 @@ def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
         except ValueError as e:
             logging.error(f"Error while preparing price cells for offer {offer['url']}:\n{e}")
             pass
+
     return lowest_price_cell + latest_price_cell + highest_price_cell
 
 

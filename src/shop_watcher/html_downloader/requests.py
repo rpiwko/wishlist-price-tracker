@@ -42,7 +42,7 @@ def get_the_html(url):
         try:
             r = get(url, timeout=60, headers=headers)
             if r.status_code == 404:
-                logging.warning(f"[{domain}] 404: page not found!")
+                logging.warning(f"[{domain}] 404: page not found under URL={url}")
                 return ""
             if _is_response_ok(r):
                 raw_html_string = r.text

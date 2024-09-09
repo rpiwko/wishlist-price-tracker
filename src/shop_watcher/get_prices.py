@@ -85,14 +85,18 @@ def _get_prices_for_domain(url_list):
             assert string_tools.get_domain_from_url(url) == domain, \
                 "Two different domains detected in url_list parameter!"
             if urls_with_prices[url]:
-                try:
-                    logging.info(f"[{domain}] Formatting and validating price found under URL={url}")
-                    valid_price_string = string_tools.format_and_validate_the_price(urls_with_prices[url][0])
-                    urls_with_prices[url] = valid_price_string, urls_with_prices[url][1]
-                except ValueError as e:
-                    logging.error(f"[{domain}] Price formatting failed for URL='{url}': {str(e)}")
-                    urls_with_prices[url] = None, urls_with_prices[url][1]
+                logging.info(f"[{domain}] Formatting and validating price found under URL={url}")
+                if urls_with_prices[url][0] is None:
+                    logging.warning(f"[{domain}] Price is None. Skipping further processing URL={url}")
+                else:
+                    try:
+                        valid_price_string = string_tools.format_and_validate_the_price(urls_with_prices[url][0])
+                        urls_with_prices[url] = valid_price_string, urls_with_prices[url][1]
+                    except ValueError as e:
+                        logging.error(f"[{domain}] Price formatting failed for URL='{url}': {str(e)}")
+                        urls_with_prices[url] = None, urls_with_prices[url][1]
             else:
+                # Probably exception was thrown during getting price and availability
                 urls_with_prices[url] = None, None
         logging.info(f"[{domain}] Getting prices for {domain} completed!")
         return urls_with_prices
