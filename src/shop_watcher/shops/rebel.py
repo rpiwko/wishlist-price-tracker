@@ -20,9 +20,13 @@ class rebel(base_static_page_shop):
             logging.info("is_available=" + str(is_available))
             # Price is still shown even when item is not available
             price_tag = html.find_all("span", attrs={"itemprop": "price"})
-            assert len(price_tag) == 1, f"Expected one price tag but getting {len(price_tag)}"
-            price_string = price_tag[0].get("content")
-            logging.info("price_string=" + price_string)
+            if is_available or len(price_tag) == 1:
+                assert len(price_tag) == 1, f"Expected one price tag but getting {len(price_tag)}"
+                price_string = price_tag[0].get("content")
+                logging.info("price_string=" + price_string)
+            else:
+                # Product is not available and its page was removed too
+                assert len(price_tag) == 0, f"Expected no tag but getting {len(price_tag)}"
         return price_string, is_available
 
     def _is_available(self, html):

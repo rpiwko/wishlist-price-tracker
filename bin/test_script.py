@@ -144,6 +144,8 @@ results = shop_watcher.get_the_price("https://www.rebel.pl/gry-planszowe/everdel
 print("rebel.pl - available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.rebel.pl/gry-planszowe/aliens-bug-hunt-2002009.html")
 print("rebel.pl - not available item: " + str(results))
+results = shop_watcher.get_the_price("https://www.rebel.pl/ksiazki/thorgal-tom-15-wladca-gor-101912.html")
+print("rebel.pl - not available item and product page not available: " + str(results))
 results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/fantasy/toppi-kolekcja-tom-2-ameryka-polnocna/")
 print("lostintime.pl - available item, no promo: " + str(results))
 results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/fantasy/legenda-o-szkarlatnych-oblokach-wydanie-zbiorcze/")
