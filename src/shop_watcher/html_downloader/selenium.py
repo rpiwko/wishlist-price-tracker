@@ -45,6 +45,12 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     logging.info(f"[{domain}] Getting HTML with html_downloader.selenium for URL={url}")
 
     global drivers
+
+    def _quit_webdriver():
+        drivers[domain].quit()
+        del drivers[domain]
+        logging.info(f"[{domain}] WebDriver object was disposed. Remained WebDrivers: {str(drivers)}")
+
     try:
         _create_driver_if_needed(domain)
         drivers[domain].get(url)
@@ -56,13 +62,13 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
         return BeautifulSoup(raw_html_string, "html.parser")
     except Exception as e:
         logging.error(f"[{domain}] Unhandled exception occurred!\n{str(e)}")
+        if not quit_webdriver:
+            _quit_webdriver()
         # TODO: Add mechanism to automatic retry
         raise
     finally:
         if quit_webdriver:
-            drivers[domain].quit()
-            del drivers[domain]
-            logging.info(f"[{domain}] WebDriver object was disposed. Remained WebDrivers: {str(drivers)}")
+            _quit_webdriver()
 
 
 def get_htmls(url_list, element_to_wait=None):
