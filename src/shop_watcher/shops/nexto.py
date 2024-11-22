@@ -22,10 +22,19 @@ class nexto(base_static_page_shop):
             logging.info("is_available=" + str(is_available))
             # If not is_available, then price is not shown so skip further checking
             if is_available:
-                price_tag = html.find_all("div", class_="prices")
+                price_section = html.find_all("div", class_="buybox-in issue")
+                assert len(price_section) == 1, f"Expected one price section but getting {len(price_section)}"
+
+                premium_price = price_section[0].find_all("div", class_="option option-cart premium")
+                assert len(premium_price) == 1, f"Expected one premium price but getting {len(premium_price)}"
+                premium_price[0].decompose()
+
+                price_tag = price_section[0].find_all("div", class_="prices")
                 assert len(price_tag) == 1, f"Expected one <prices> tag but getting {len(price_tag)}"
+
                 price_string = price_tag[0].find("strong", class_="price").get_text()
                 logging.info("price_string=" + price_string)
+
         return price_string, is_available
 
 
