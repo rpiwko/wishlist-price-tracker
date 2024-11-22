@@ -62,8 +62,7 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
         return BeautifulSoup(raw_html_string, "html.parser")
     except Exception as e:
         logging.error(f"[{domain}] Unhandled exception occurred!\n{str(e)}")
-        if not quit_webdriver:
-            _quit_webdriver()
+        quit_webdriver = True
         # TODO: Add mechanism to automatic retry
         raise
     finally:

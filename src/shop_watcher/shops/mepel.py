@@ -40,5 +40,6 @@ class mepel(base_static_page_shop):
         if not_available_icon and not_available_icon.find("em").text.strip() == "brak towaru":
             return False
         if preorder_icon and preorder_icon.find("em").text.strip() == "przedsprzedaż":
+            logging.info("This offer is preorder!")
             return False
         raise ValueError("Unable to determine item availability")
