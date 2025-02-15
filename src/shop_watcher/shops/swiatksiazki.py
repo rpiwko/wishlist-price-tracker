@@ -10,7 +10,7 @@ from .base_dynamic_page_shop import base_dynamic_page_shop
 class swiatksiazki(base_dynamic_page_shop):
 
     def get_element_to_wait(self):
-        return "//h2[@class='ProductAttributes-Title']"
+        return None
 
     def get_supported_domain(self):
         return "swiatksiazki.pl"

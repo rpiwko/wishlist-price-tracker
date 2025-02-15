@@ -98,7 +98,7 @@ results = shop_watcher.get_the_price("https://planszostrefa.pl/pl/p/Legendary-En
 print("planszostrefa.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://www.swiatksiazki.pl/emma-6749841-e-book.html")
 print("swiatksiazki.pl - available item: " + str(results))
-results = shop_watcher.get_the_price("https://www.swiatksiazki.pl/madame-2021-6944477-e-book.html")
+results = shop_watcher.get_the_price("https://www.swiatksiazki.pl/dziennik-1943-1948-6337276-e-book.html")
 print("swiatksiazki.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://strefamarzen.pl/pl/products/d-d-ghost-of-saltmarsh-board-game-dodatek-13907")
 print("strefamarzen.pl - available: " + str(results))

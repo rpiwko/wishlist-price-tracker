@@ -11,7 +11,10 @@ class base_dynamic_page_shop:
 
     def get_element_to_wait(self):
         """
-        Returns xpath pointing page element for which html_downloader will wait before reading the HTML 
+        Returns xpath pointing page element for which html_downloader will wait before getting the HTML.
+        If None returned, then page readiness will be determined base on DOM stability. This is slow and thus
+        not recommended approach. Use only if other methods fail (e.g. for pages with price or availability
+        being updated by background JS without other visible impact)
         """
         raise NotImplementedError("The get_element_to_wait() method needs to be \
 overridden in each class which inherits from base_dynamic_page_shop!")

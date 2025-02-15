@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
 import random
+import math
 from .. import string_tools
 
 
@@ -32,9 +33,9 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
     Args:
         url (str): web page address to get the HTML from
         element_to_wait (str): xpath pointing page element for which WebDriver will wait before reading the HTML;
-            if it's not defined, then page readiness will be determined base on DOM stability. This is slow and thus
-            not recommended approach. Use only if other methods fail (e.g. for pages with prices or availability
-            being updated by background JS without other visible impact)
+            if it's not defined (None), then page readiness will be determined base on DOM stability. This is slow
+            and thus not recommended approach. Use only if other methods fail (e.g. for pages with price
+            or availability being updated by background JS without other visible impact)
         quit_webdriver (bool): if True, then driver.quit() will be called in finally block 
 
     Returns:
@@ -118,7 +119,7 @@ def _pause_execution(domain, pause_time_in_sec=0):
 
 def _wait_until_dom_is_stable(domain):
     check_interval = 5
-    for i in range(0, round(implicit_wait_in_seconds/check_interval)):
+    for i in range(0, math.ceil(implicit_wait_in_seconds/check_interval)):
         prev_state = drivers[domain].page_source
         time.sleep(check_interval)
         if prev_state == drivers[domain].page_source:
