@@ -23,7 +23,7 @@ delay_min_sec = 2
 delay_max_sec = 6
 
 # How long WebDriver will poll DOM for element_to_wait or DOM to be stable
-implicit_wait_in_seconds = 120
+implicit_wait_in_seconds = 30
 
 
 def get_the_html(url, element_to_wait=None, quit_webdriver=True):
@@ -58,11 +58,15 @@ def get_the_html(url, element_to_wait=None, quit_webdriver=True):
         if element_to_wait:
             drivers[domain].find_element(By.XPATH, element_to_wait)
         else:
-            _wait_until_dom_is_stable(domain)
+            try:
+                _wait_until_dom_is_stable(domain)
+            except TimeoutError:
+                logging.warning(f"[{domain}] Timeout! Price and availability will be determined using unstable DOM. "
+                              f"URL={url}")
         raw_html_string = drivers[domain].page_source
         return BeautifulSoup(raw_html_string, "html.parser")
     except Exception as e:
-        logging.error(f"[{domain}] Unhandled exception occurred!\n{str(e)}")
+        logging.error(f"[{domain}] Unhandled exception occurred: {str(e)}")
         quit_webdriver = True
         # TODO: Add mechanism to automatic retry
         raise
@@ -82,7 +86,7 @@ def get_htmls(url_list, element_to_wait=None):
             else:
                 urls_with_htmls[url] = get_the_html(url, element_to_wait=element_to_wait)
         except Exception as e:
-            logging.error(f"[{domain}] Unable to extract HTML from URL='{url}' because of error:\n{str(e)}")
+            logging.error(f"[{domain}] Unable to extract HTML from URL={url} because of error: {str(e)}")
             urls_with_htmls[url] = None
             if url_list.index(url) < len(url_list) - 1:
                 _pause_execution(domain, 60)
