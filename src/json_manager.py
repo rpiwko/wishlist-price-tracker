@@ -125,11 +125,11 @@ def update_prices(urls_with_files, urls_with_prices_and_availability):
             new_price = urls_with_prices_and_availability[url][0]
             is_available = urls_with_prices_and_availability[url][1]
             if new_price is None and is_available is None:
-                logging.info(f"Skipping file update for url='{url}' because both new_price and is_available are empty")
+                logging.info(f"Skipping file update for URL={url} because both new_price and is_available are empty")
                 continue
             update_the_price_and_availability(urls_with_files[url], url, new_price, is_available)
         except Exception as e:
-            logging.error(f"Exception occurred while updating prices:\n{str(e)}")
+            logging.error(f"Error occurred while updating prices: {str(e)}")
             continue
 
 

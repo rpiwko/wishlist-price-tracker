@@ -139,7 +139,7 @@ def _get_cells_with_prices(offer, best_price_for_item, worst_price_for_item):
                 logging.info(f"The latestPrice={offer['latestPrice']} is today the worst one!")
                 latest_price_cell = latest_price_cell.replace("<td>", f"<td class=\"{bad_value_class}\">")
         except ValueError as e:
-            logging.error(f"Error while preparing price cells for offer {offer['url']}:\n{e}")
+            logging.error(f"Error while preparing price cells for offer {offer['url']}: {e}")
             pass
 
     return lowest_price_cell + latest_price_cell + highest_price_cell

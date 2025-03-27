@@ -142,7 +142,7 @@ def _group_urls_by_domain(url_list):
             else:
                 grouped_urls[domain].append(url)
         except ValueError as e:
-            logging.error(f"Skipping URL='{url}' because of exception: {str(e)} ")
+            logging.error(f"Skipping URL={url} because of error: {str(e)} ")
     logging.info("Grouping URLs by domain completed")
     return grouped_urls
 

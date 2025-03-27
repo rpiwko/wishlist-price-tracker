@@ -53,7 +53,7 @@ def get_the_html(url):
                 # error_text += f"\nReturned text: {r.text}"
                 raise requests.exceptions.HTTPError(error_text)
         except RequestException as e:
-            logging.error(f"[{domain}] Unable to get HTML for URL='{url}' Attempt: {attempt_no} of {max_retries}. "
+            logging.error(f"[{domain}] Unable to get HTML for URL={url}. Attempt: {attempt_no} of {max_retries}. "
                           f"Error details: {str(e)}")
             if attempt_no < max_retries:
                 _pause_execution(domain, pause_time_in_sec=(attempt_no * 60))
@@ -72,7 +72,7 @@ def get_htmls(url_list):
             if url_list.index(url) < len(url_list) - 1:
                 _pause_execution(domain)
         except Exception as e:
-            logging.error(f"[{domain}] Unable to get HTML for URL='{url}'. Check earlier logs for details.")
+            logging.error(f"[{domain}] Unable to get HTML for URL={url}. Check earlier logs for details.")
             urls_with_htmls[url] = None
             if url_list.index(url) < len(url_list) - 1:
                 _pause_execution(domain, pause_time_in_sec=60)

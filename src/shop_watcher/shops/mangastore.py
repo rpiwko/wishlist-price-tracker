@@ -43,5 +43,5 @@ class mangastore(base_static_page_shop):
         except KeyError:
             return False
         except Exception as e:
-            raise ValueError(f"Unable to determine item availability because of exception:\n{str(e)}")
+            raise ValueError(f"Unable to determine item availability because of error: {str(e)}")
         raise ValueError("Unable to determine item availability")

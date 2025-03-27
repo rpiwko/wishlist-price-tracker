@@ -34,7 +34,7 @@ def get_the_price(url):
     try:
         valid_price_string = string_tools.format_and_validate_the_price(raw_price_string)
     except Exception as e:
-        logging.error(f"Unable to get valid price for URL='{url}': {str(e)}")
+        logging.error(f"Unable to get valid price for URL={url} because of error: {str(e)}")
         valid_price_string = None
     return [valid_price_string, is_available]
 

@@ -39,5 +39,5 @@ class mangarden(base_dynamic_page_shop):
             if availability_panel[0]["style"] == "":
                 return False
         except Exception as e:
-            raise ValueError(f"Unable to determine item availability because of exception:\n{str(e)}")
+            raise ValueError(f"Unable to determine item availability because of error: {str(e)}")
         raise ValueError("Unable to determine item availability")
