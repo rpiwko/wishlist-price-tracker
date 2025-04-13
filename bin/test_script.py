@@ -154,5 +154,9 @@ results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/obycza
 print("lostintime.pl - not available item: " + str(results))
 results = shop_watcher.get_the_price("https://lostintime.pl/sklep/komiksy/przygodowe/hitomi/")
 print("lostintime.pl - preorder: " + str(results))
+results = shop_watcher.get_the_price("https://www.xjoy.pl/przygodowe/16026-waste-knights-druga-edycja.html")
+print("xjoy.pl - available item, promo: " + str(results))
+results = shop_watcher.get_the_price("https://www.xjoy.pl/lord-of-the-rings-lcg/21867-lord-of-the-rings-the-card-game-return-of-the-king-saga-expansion.html")
+print("xjoy.pl - not available item: " + str(results))
 
 print("Script completed!")

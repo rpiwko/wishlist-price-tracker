@@ -107,6 +107,17 @@
             "latestPriceDate": null,
             "highestPrice": null,
             "highestPriceDate": null
+        },
+        {
+            "url": "https://xjoy.pl...",
+            "isAvailable": true,
+            "isAvailableDate": null,
+            "lowestPrice": null,
+            "lowestPriceDate": null,
+            "latestPrice": null,
+            "latestPriceDate": null,
+            "highestPrice": null,
+            "highestPriceDate": null
         }
     ],
     "references": [
